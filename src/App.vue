@@ -1,92 +1,98 @@
 <template>
-  <div id="app">
-    
-    <!--<script src="https://cdn-webgl.wrld3d.com/wrldjs/dist/latest/wrld.js"></script>dir-->
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />-->
+    <div id="app">
+      
+        <!--<script src="https://cdn-webgl.wrld3d.com/wrldjs/dist/latest/wrld.js"></script>dir-->
+        <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />-->
 
-    <!--<img src="./assets/UofT.png">-->
+        <!--<img src="./assets/UofT.png">-->
 
-    <!-- <h1>{{ msg }}</h1> -->
-    <div id="widget-container" class="wrld-widget-container"></div>
-    <div id="map" style="height: 100vh"></div>
-    
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />
+        <!-- <h1>{{ msg }}</h1> -->
+        <div id="widget-container" class="wrld-widget-container"></div>
 
-    <link href="https://cdn-webgl.wrld3d.com/wrldjs/addons/resources/latest/css/wrld.css" rel="stylesheet"/>
-    <!--<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-    <script src="https://cdn-webgl.wrld3d.com/wrldjs/addons/indocontrol/latest/indoor_control.js"></script>-->
+        <div id="map" style="height: 96vh;"></div>
+        
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />
 
-    <!--<h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://leafletjs.com/" target="_blank">Leaflet</a></li>
-      <li><a href="https://www.wrld3d.com/" target="_blank">WRLD</a></li>
-      <li><a href="https://www.wrld3d.com/legal" target="_blank">Partners</a></li>
-    </ul>-->
+        <link href="https://cdn-webgl.wrld3d.com/wrldjs/addons/resources/latest/css/wrld.css" rel="stylesheet"/>
+        <!--<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+        <script src="https://cdn-webgl.wrld3d.com/wrldjs/addons/indocontrol/latest/indoor_control.js"></script>-->
 
-  </div>
+        <!--<h2>Essential Links</h2>
+        <ul>
+          <li><a href="https://leafletjs.com/" target="_blank">Leaflet</a></li>
+          <li><a href="https://www.wrld3d.com/" target="_blank">WRLD</a></li>
+          <li><a href="https://www.wrld3d.com/legal" target="_blank">Partners</a></li>
+        </ul>-->
+
+    </div>
 </template>
 
 <script>
 
+import { initialCameraZoom }  from './initial_camera_zoom';
 import { onLoadScrollbar }  from './indoor_control';
+import { pad }  from './indoor_control'; // # TODO in progress, pads the document
+
 const Wrld = require("wrld.js")
 
 export default {
-  name: 'app',
-  mounted() {
-    var map = L.Wrld.map("map", "3cd9616c750d2d11c80f85d0a2cf32f0", {
-      center: [43.549, -79.6636],
-      zoom: 15,
-      trafficEnabled: false,
-      frameRateThrottleWhenIdleEnabled: true,
-      throttledTargetFrameIntervalMilliseconds: 500,
-      idleSecondsBeforeFrameRateThrottle: 15.0,
-      indoorsEnabled: true
-    });
+    name: 'app',
+    mounted() {
+        var map = L.Wrld.map("map", "5378c39112e718bdeb6f19df0168d1cf", {
+            center: [43.549, -79.6636],
+            zoom: 15,
+            trafficEnabled: false,
+            frameRateThrottleWhenIdleEnabled: true,
+            throttledTargetFrameIntervalMilliseconds: 500,
+            idleSecondsBeforeFrameRateThrottle: 15.0,
+            indoorsEnabled: true,
+            coverageTreeManifest: "https://webgl-cdn1.wrld3d.com/chunk/indoor_maps/api_requests/EIM-c3eb2f77-20e3-4b6b-bb11-784ced915fa0_2020_02_09_05_33_40/webgl_manifest.bin.gz"
+        });
 
-    //setTimeout(function() {
-      // zooms in on a very precise area
-      /* TODO: get precise coordinates of DH
-      */
-      //var bounds = L.latLngBounds([43.54, -79.66], [43.54, -79.66]);
-      //map.fitBounds(bounds);
-    //}, 3000);
+        // initialCameraZoom(map)
 
-    onLoadScrollbar(map)
-  },
+        onLoadScrollbar(map)
+
+        // pad()
+    },
   
-  data () {
-    return {
-      msg: ''
-    }
-  },
+    data () {
+        return {
+            msg: ''
+        }
+    },
 }
 </script>
 
 <style>
 body {
-  margin: 0;
+    padding: 1vh;
 }
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
 }
+
 h1, h2 {
-  font-weight: normal;
+    font-weight: normal;
 }
+
 ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
+
 li {
-  display: inline-block;
-  margin: 0 10px;
+    display: inline-block;
+    margin: 0 10px;
 }
+
 a {
-  color: #033267;
+    color: #033267;
 }
 </style>
