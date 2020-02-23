@@ -3,7 +3,6 @@ require('wrld.js')
 const { WrldIndoorControl } = window;
 
 export function initialCameraZoom (map) {
-    console.log("initialCameraZoom");
     setTimeout(
         function() {
             // zooms in on a very precise area
@@ -15,5 +14,4 @@ export function initialCameraZoom (map) {
         
         8000
     );
-    console.log("initialCameraZoomed");
 }
