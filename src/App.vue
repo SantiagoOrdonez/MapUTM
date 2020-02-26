@@ -25,8 +25,8 @@
     name: 'app',
     mounted() {
       this.map = L.Wrld.map("map", "5378c39112e718bdeb6f19df0168d1cf", {
-        center: [43.549, -79.6636], // UTM
-        // center: [56.4602727, -2.9786788], // Dundee, UK
+        // center: [43.549, -79.6636], // UTM
+        center: [56.4602727, -2.9786788], // Dundee, UK
         zoom: 15,
         trafficEnabled: false,
         frameRateThrottleWhenIdleEnabled: true,
@@ -57,10 +57,10 @@
 
       },
       route(){
-        // const startPoint = [-2.978629, 56.46024, 0];
-        // const endPoint = [-2.9783117, 56.4600344, 2];
-        const startPoint = [-79.6659923, 43.5503476, 0];
-        const endPoint = [-79.6665724, 43.5505642, 0];
+        const startPoint = [-2.978629, 56.46024, 0]; // Hardcoded Dundee Coordinates
+        const endPoint = [-2.9783117, 56.4600344, 2];
+        // const startPoint = [-79.6659923, 43.5503476, 0]; // UTM Test Coordinates
+        // const endPoint = [-79.6665724, 43.5505642, 0];
 
         this.map.routes.getRoute([startPoint, endPoint], this.onRoutesLoaded);
         console.log(this.routeLines);
