@@ -47,7 +47,7 @@ export default {
 }
 </script>
 
-<!-- All CSS styles # this is a SINGLE FILE COMPONENT. -->
+<!-- All CSS styles. -->
 
 <style>
 .eegeo-indoor-control {
