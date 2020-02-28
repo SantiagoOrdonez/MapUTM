@@ -4,14 +4,9 @@
     <img src="../assets/UofT.png">
 
     <h1>{{ msg }}</h1>
-    <!--<button v-on:click="findBlueSphere">click me</button>-->
     <!-- Searchbar container -->
     <search-bar :route="route" ref="search"></search-bar>
     <div id="map" style="height: 100vh"></div>
-    <!-- <div id="searchbar-widget-container" class="wrld-widget-container"></div> -->
-
-    <!-- Scrollbar container -->
-    <!-- <div id="indoor-control-widget-container" style="position: absolute; right: 10px; top: 10px; bottom: 26px"></div> -->
 
     <ul>
       <li><a href="https://leafletjs.com/" target="_blank">Leaflet</a></li>
@@ -44,7 +39,6 @@
         height: 500
       });
       this.map.indoors.on("indoormapenter", this.onEnter);
-      //this.map.on("initialstreamingcomplete", this.onInitialStreamingComplete);
       this.$refs.search.loadSearchbar(this.map);
     },
     data() {
@@ -57,7 +51,6 @@
     methods:{
       onEnter(event){
         console.log(event);
-        // this.map.on("oninitialstreamingcomplete", this.onInitialStreamingComplete);
         this.map.blueSphere.setEnabled(true);
         this.map.blueSphere.setLocation([56.46024, -2.978629]);
         this.map.blueSphere.setIndoorMap("westport_house", 0);
@@ -90,14 +83,6 @@
       exitIndoors(){
         this.map.indoors.exit();
       },
-      // onInitialStreamingComplete() {
-      //   this.map.blueSphere.setEnabled(true);
-      //   this.map.blueSphere.setLocation([-2.978629, 56.46024]);
-      //   this.map.blueSphere.setIndoorMap("westport_house", 0);
-      // },
-      // findBlueSphere() {
-      //   this.map.setView([-2.978629, 56.46024, 5]);
-      // }
     }
   }
 </script>
