@@ -36,13 +36,9 @@ export default {
         },
         onResultSelect(event) {
             this.map.setView(event.result.location.latLng, 20); 
-            this.highlightResult(event.result);
             this.route([event.result.data.lon, event.result.data.lat, event.result.data.floor_id]);
         },
 
-        highlightResult(result) {
-            this.clearHighlights();
-        },
         clearHighlights() {
             this.map.indoors.clearEntityHighlights();
         }
