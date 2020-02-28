@@ -1,5 +1,5 @@
 <template>
-  <div id="searchbar-widget-container" style="position: relative; top: 55px" class="wrld-widget-container"></div>
+  <div id="searchbar-widget-container" class="wrld-widget-container"></div>
 </template>
  
 <script>
@@ -38,14 +38,13 @@ export default {
             this.map.setView(event.result.location.latLng, 20); 
             this.route([event.result.data.lon, event.result.data.lat, event.result.data.floor_id]);
         },
-
-        clearHighlights() {
-            this.map.indoors.clearEntityHighlights();
-        }
     },
-}
+};
 </script>
 
 <style>
-
+    #searchbar-widget-container {
+        position: relative;
+        top: 55px;
+    }
 </style>
