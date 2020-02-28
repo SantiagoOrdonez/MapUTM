@@ -61,6 +61,7 @@
         this.map.blueSphere.setEnabled(true);
         this.map.blueSphere.setLocation([56.46024, -2.978629]);
         this.map.blueSphere.setIndoorMap("westport_house", 0);
+        this.map.setView([56.46024, -2.978629], 20);
       },
       route(destination){
         const startPoint = [-2.978629, 56.46024, 0]; // Hardcoded Dundee Coordinates
