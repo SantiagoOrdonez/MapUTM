@@ -1,5 +1,5 @@
 <template>
-  <div id="searchbar-widget-container" style="padding-top: 52vh" class="wrld-widget-container"></div>
+  <div id="searchbar-widget-container" style="padding-top: 1vh; padding-left: 1vh" class="wrld-widget-container"></div>
 </template>
  
 <script>

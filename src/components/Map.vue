@@ -1,38 +1,35 @@
 <template>
   <div id="app">
 
-    <img src="../assets/UofT.png">
-
-    <h1>{{ msg }}</h1>
+    <div id="widget-container" style="height: 96vh" class="wrld-widget-container"></div>
+    
     <!-- Searchbar container -->
     <search-bar :route="route" ref="search"></search-bar>
-    <div id="map" style="height: 100vh"></div>
     <!-- <div id="searchbar-widget-container" class="wrld-widget-container"></div> -->
 
     <!-- Scrollbar container -->
+    <scroll-bar ref="scroll"></scroll-bar>
     <!-- <div id="indoor-control-widget-container" style="position: absolute; right: 10px; top: 10px; bottom: 26px"></div> -->
-
-    <ul>
-      <li><a href="https://leafletjs.com/" target="_blank">Leaflet</a></li>
-      <li><a href="https://www.wrld3d.com/" target="_blank">WRLD</a></li>
-      <li><a href="https://www.wrld3d.com/legal" target="_blank">Partners</a></li>
-    </ul>
+  
+    <div id="map" style="height: 96vh"></div>
   </div>
 </template>
 
 <script>
   import SearchBar from "./SearchBar"
+  import ScrollBar from "./ScrollBar"
   const wrld = require("wrld.js");
   
   export default {
     name: 'app',
     components: {
       SearchBar,
+      ScrollBar,
     },
     mounted() {
       this.map = wrld.map("map", "5378c39112e718bdeb6f19df0168d1cf", {
-        // center: [43.549, -79.6636], // UTM
-        center: [56.4602727, -2.9786788], // Dundee, UK
+        center: [43.549, -79.6636], // UTM
+        // center: [56.4602727, -2.9786788], // Dundee, UK
         zoom: 15,
         trafficEnabled: false,
         frameRateThrottleWhenIdleEnabled: true,
@@ -43,6 +40,7 @@
         height: 500
       });
       this.map.indoors.on("indoormapenter", this.onEnter);
+      this.$refs.scroll.loadScrollbar(this.map);
       this.$refs.search.loadSearchbar(this.map);
     },
     data() {
@@ -54,7 +52,7 @@
     },
     methods:{
       onEnter(event){
-        console.log(event)
+        console.log(event);
       },
       route(destination){
         const startPoint = [-2.978629, 56.46024, 0]; // Hardcoded Dundee Coordinates
