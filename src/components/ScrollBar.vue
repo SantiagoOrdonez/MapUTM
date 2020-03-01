@@ -2,7 +2,6 @@
     
     <div id="indoor-control-widget-container"></div>
   
-            <!--<div id="aa"></div>-->
 </template>
  
 <script>
@@ -19,13 +18,6 @@ export default {
 </script>
 
 <style>
-
-/* s {
-    position: absolute; 
-    right: 10px; 
-    top: 10px; 
-    bottom: 26px;
-} */
 .eegeo-indoor-control {
     padding-top: 70px;
     padding-left: 3vh;

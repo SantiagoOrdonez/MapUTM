@@ -2,16 +2,15 @@
   <div id="app">
 
     <div id="widget-container" style="height: 96vh" class="wrld-widget-container"></div>
-    
-    <!-- Searchbar container -->
     <search-bar :route="route" ref="search"></search-bar>
-    <!-- <div id="searchbar-widget-container" class="wrld-widget-container"></div> -->
-
-    <!-- Scrollbar container -->
     <scroll-bar ref="scroll"></scroll-bar>
-    <!-- <div id="indoor-control-widget-container" style="position: absolute; right: 10px; top: 10px; bottom: 26px"></div> -->
-  
-    <div id="map" style="height: 96vh"></div>
+    <div id="map" style="height: 100vh"></div>
+
+    <ul>
+      <li><a href="https://leafletjs.com/" target="_blank">Leaflet</a></li>
+      <li><a href="https://www.wrld3d.com/" target="_blank">WRLD</a></li>
+      <li><a href="https://www.wrld3d.com/legal" target="_blank">Partners</a></li>
+    </ul>
   </div>
 </template>
 
@@ -53,12 +52,17 @@
     methods:{
       onEnter(event){
         console.log(event);
+        this.map.blueSphere.setEnabled(true);
+        this.map.blueSphere.setLocation([56.46024, -2.978629]);
+        this.map.blueSphere.setIndoorMap("westport_house", 0);
+        this.map.setView([56.46024, -2.978629], 20);
       },
       route(destination){
         const startPoint = [-2.978629, 56.46024, 0]; // Hardcoded Dundee Coordinates
         const endPoint = destination;
         // const startPoint = [-79.6659923, 43.5503476, 0]; // UTM Test Coordinates
         // const endPoint = [-79.6665724, 43.5505642, 0];
+        this.map.on("initialstreamingcomplete", this.onInitialStreamingComplete);
 
         this.map.routes.getRoute([startPoint, endPoint], this.onRoutesLoaded);
         console.log(this.routeLines);
@@ -79,7 +83,7 @@
       },
       exitIndoors(){
         this.map.indoors.exit();
-      }
+      },
     }
   }
 </script>
