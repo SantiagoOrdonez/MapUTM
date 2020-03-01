@@ -44,7 +44,6 @@ export default {
 
 <style>
     #searchbar-widget-container {
-        position: relative;
         top: 55px;
         height: 96vh;
     }
