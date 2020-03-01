@@ -1,7 +1,5 @@
 <template>
-    
-    <div id="indoor-control-widget-container"></div>
-  
+    <div id="scrollbar-container" class="wrld-widget-container"></div>
 </template>
  
 <script>
@@ -10,7 +8,7 @@ export default {
     methods: {
         loadScrollbar(map) {
             this.map = map;
-            var indoorControl = new window.WrldIndoorControl("widget-container", this.map);
+            var indoorControl = new window.WrldIndoorControl("scrollbar-container", this.map);
             return indoorControl;
         },
     },
@@ -21,5 +19,6 @@ export default {
 .eegeo-indoor-control {
     padding-top: 70px;
     padding-left: 3vh;
+    float: right;
 }
 </style>

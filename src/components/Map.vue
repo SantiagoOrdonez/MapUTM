@@ -1,11 +1,8 @@
 <template>
   <div id="app">
-
-    <div id="widget-container" style="height: 96vh" class="wrld-widget-container"></div>
     <search-bar :route="route" ref="search"></search-bar>
     <scroll-bar ref="scroll"></scroll-bar>
     <div id="map" style="height: 100vh"></div>
-
     <ul>
       <li><a href="https://leafletjs.com/" target="_blank">Leaflet</a></li>
       <li><a href="https://www.wrld3d.com/" target="_blank">WRLD</a></li>
@@ -27,8 +24,8 @@
     },
     mounted() {
       this.map = wrld.map("map", "5378c39112e718bdeb6f19df0168d1cf", {
-        center: [43.549, -79.6636], // UTM
-        // center: [56.4602727, -2.9786788], // Dundee, UK
+        //center: [43.549, -79.6636], // UTM
+        center: [56.4602727, -2.9786788], // Dundee, UK
         zoom: 15,
         trafficEnabled: false,
         frameRateThrottleWhenIdleEnabled: true,
