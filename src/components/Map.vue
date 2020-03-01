@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-
-    <img src="../assets/UofT.png">
-
-    <h1>{{ msg }}</h1>
     <!-- Searchbar container -->
     <search-bar :route="route" ref="search"></search-bar>
     <div id="map" style="height: 100vh"></div>

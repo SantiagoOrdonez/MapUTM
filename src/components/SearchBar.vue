@@ -32,7 +32,6 @@ export default {
             const searchbar = new window.WrldSearchbar("searchbar-widget-container", this.map, this.searchbarConfig);
 
             searchbar.on("searchresultselect", this.onResultSelect);
-            searchbar.on("searchresultsclear", this.clearHighlights);
         },
         onResultSelect(event) {
             this.map.setView(event.result.location.latLng, 20); 
