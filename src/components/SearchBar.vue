@@ -20,7 +20,8 @@ export default {
                     {name: "Around Me", searchTag: "", iconKey: "aroundme"},
                 ],
                 locationJumps: [
-                    {name: "Deerfield Hall", latLng: [43.549, -79.6636]}
+                    {name: "Deerfield Hall", latLng: [43.549, -79.6636]},
+                    {name: "Dundee", latLng: [56.4602727, -2.9786788]}
                 ]
             },
             map: null
@@ -43,7 +44,8 @@ export default {
 
 <style>
     #searchbar-widget-container {
-        position: relative;
-        top: 55px;
+        top: 95px;
+        left: 20px;
+        height: 96vh;
     }
 </style>
