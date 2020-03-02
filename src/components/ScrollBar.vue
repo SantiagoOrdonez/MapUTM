@@ -17,8 +17,8 @@ export default {
 
 <style>
 .eegeo-indoor-control {
-    padding-top: 70px;
-    padding-left: 3vh;
+    top: 95px;
+    right: 20px;
     float: right;
 }
 </style>

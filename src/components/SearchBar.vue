@@ -20,7 +20,8 @@ export default {
                     {name: "Around Me", searchTag: "", iconKey: "aroundme"},
                 ],
                 locationJumps: [
-                    {name: "Deerfield Hall", latLng: [43.549, -79.6636]}
+                    {name: "Deerfield Hall", latLng: [43.549, -79.6636]},
+                    {name: "Dundee", latLng: [56.4602727, -2.9786788]}
                 ]
             },
             map: null
@@ -32,7 +33,6 @@ export default {
             const searchbar = new window.WrldSearchbar("searchbar-widget-container", this.map, this.searchbarConfig);
 
             searchbar.on("searchresultselect", this.onResultSelect);
-            searchbar.on("searchresultsclear", this.clearHighlights);
         },
         onResultSelect(event) {
             this.map.setView(event.result.location.latLng, 20); 
@@ -44,7 +44,8 @@ export default {
 
 <style>
     #searchbar-widget-container {
-        top: 55px;
+        top: 95px;
+        left: 20px;
         height: 96vh;
     }
 </style>
