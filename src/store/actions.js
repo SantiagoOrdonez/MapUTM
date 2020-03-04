@@ -14,8 +14,8 @@ export default {
                     });
                 routeLine.addTo(map);
                 routeLines.push(routeLine);
-                commit('updateRoutes', routeLines);
             }
+            commit('updateRoutes', routeLines);
         }
         map.routes.getRoute([startPoint, endPoint], onRoutesLoaded);
     },

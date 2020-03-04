@@ -47,7 +47,8 @@
         },
         computed: mapGetters({
             // Only re-evaluate when its reactive dependencies are changed
-            routeLinesLength: 'getRouteLinesLength'
+            routeLinesLength: 'getRouteLinesLength',
+            routeLinesRoutes: 'getRouteLinesRoutes'
         }),
         methods: {
             ...mapActions([
@@ -55,23 +56,24 @@
             ]),
             onEnter() {
                 this.map.blueSphere.setEnabled(true);
-                this.map.blueSphere.setLocation(this.intitialLocation);
+                this.map.blueSphere.setLocation(this.initialLocation);
                 this.map.blueSphere.setIndoorMap("westport_house", 0);
-                //this.map.setView(this.intitialLocation.reverse(), 20);
+                // this.map.setView(this.intitialLocation.reverse(), 20);
             },
             onIndoorMapExited() {
-                for (var routeIndex = 0; routeIndex < 'routeLinesLength'; ++routeIndex) {
-                    this.map.removeLayer(this.routeLines[routeIndex]);
+                for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
+                    this.map.removeLayer(this.routeLinesRoutes[routeIndex]);
                 }
             },
             onIndoorMapExpanded() {
-                for (var routeIndex = 0; routeIndex < 'routeLinesLength'; ++routeIndex) {
-                    window.L.setOptions(this.routeLines[routeIndex], {displayOption: "currentIndoorMap"});
+                for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
+                    window.L.setOptions(this.routeLinesRoutes[routeIndex], {displayOption: "currentIndoorMap"});
                 }
             },
             onIndoorMapCollapsed() {
-                for (var routeIndex = 0; routeIndex < 'routeLinesLength'; ++routeIndex) {
-                    window.L.setOptions(this.routeLines[routeIndex], {displayOption: "currentFloor"});
+                for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
+                    console.log(routeIndex);
+                    window.L.setOptions(this.routeLinesRoutes[routeIndex], {displayOption: "currentFloor"});
                 }
             },
             exitIndoors() {
