@@ -24,7 +24,7 @@ export default {
                     {name: "Dundee", latLng: [56.4602727, -2.9786788]}
                 ]
             },
-            map: null
+            map: null,
         }
     },
     methods: {
@@ -35,7 +35,8 @@ export default {
             searchbar.on("searchresultselect", this.onResultSelect);
         },
         onResultSelect(event) {
-            this.map.setView(event.result.location.latLng, 20); 
+            // console.log(event);
+            this.map.setView(event.result.location.latLng, 20);
             this.route([event.result.data.lon, event.result.data.lat, event.result.data.floor_id]);
         },
     },
