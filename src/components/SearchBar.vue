@@ -36,7 +36,10 @@ export default {
         },
         onResultSelect(event) {
             // console.log(event);
+            this.map.indoors.setFloor(event.result.data.floor_id);
             this.map.setView(event.result.location.latLng, 20);
+            console.log(this.map);
+            console.log(this.map.indoors);
             this.route([event.result.data.lon, event.result.data.lat, event.result.data.floor_id]);
         },
     },

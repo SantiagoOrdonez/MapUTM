@@ -70,19 +70,20 @@
         const endPoint = destination;
         const startPoint = [-79.6659923, 43.5503476, 0]; // UTM Test Coordinates
         
-        // DEBUGGING for the problem below.
-        const _onRoutesError = function(err) {
-          console.log(err);
-        };
+        // // DEBUGGING for the problem below.
+        // const _onRoutesError = function(err) {
+        //   console.log(err);
+        // };
 
-        this.map.routes.getRoute([startPoint, endPoint], this.onRoutesLoaded, _onRoutesError);
+        this.map.routes.getRoute([startPoint, endPoint], this.onRoutesLoaded);
         
         // PROBLEM: a function is being called after route() that is affecting this.map.indoors.setFloor(). I cannot for the life of me find which function, 
         // I spent 6 hours with Arnav to try and fix this to no avail.
         // TEMPORARY SOLUTION: to change floors, call the function several times at varous delays.
-        setTimeout(() => this.map.indoors.setFloor(destination[2]), 1000);
-        setTimeout(() => this.map.indoors.setFloor(destination[2]), 1500);
-        setTimeout(() => this.map.indoors.setFloor(destination[2]), 2000);
+        // this.map.indoors.setFloor(destination[2]);
+        // setTimeout(() => this.map.indoors.setFloor(destination[2]), 1000);
+        // setTimeout(() => this.map.indoors.setFloor(destination[2]), 1500);
+        // setTimeout(() => this.map.indoors.setFloor(destination[2]), 2000);
       },
       onRoutesLoaded(routes){
         
