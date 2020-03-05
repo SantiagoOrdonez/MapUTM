@@ -36,10 +36,7 @@
             onResultSelect(event) {
                 this.map.indoors.setFloor(event.result.data.floor_id);
                 this.map.setView(event.result.location.latLng, 20);
-                this.route({
-                    map: this.map,
-                    destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]
-                });
+                this.route({map: this.map, destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]});
             },
         },
     };
