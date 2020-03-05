@@ -42,8 +42,9 @@
             this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
             this.map.indoors.on("expand", this.onIndoorMapExpanded);
             this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
-            this.$refs.scroll.loadScrollbar(this.map);
             this.$refs.search.loadSearchbar(this.map);
+            this.$refs.scroll.loadScrollbar(this.map);
+
         },
         computed: mapGetters({
             // Only re-evaluate when its reactive dependencies are changed

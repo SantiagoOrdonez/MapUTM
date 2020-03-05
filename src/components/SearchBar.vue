@@ -24,17 +24,17 @@
                         {name: "Dundee", latLng: [56.4602727, -2.9786788]}
                     ]
                 },
-                map: null
+                map: null,
             }
         },
         methods: {
             loadSearchbar(map) {
                 this.map = map;
                 const searchbar = new window.WrldSearchbar("searchbar-widget-container", this.map, this.searchbarConfig);
-
                 searchbar.on("searchresultselect", this.onResultSelect);
             },
             onResultSelect(event) {
+                this.map.indoors.setFloor(event.result.data.floor_id);
                 this.map.setView(event.result.location.latLng, 20);
                 this.route({
                     map: this.map,
