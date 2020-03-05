@@ -21,7 +21,8 @@
       return {
         msg: 'MapUTM',
         map: null,
-        intitialLocation: [43.549, -79.6636], // [56.4602727, -2.9786788], // Dundee, UK // UTM: [43.549, -79.6636] 
+        intitialLocation: [43.549, -79.6636], // UTM
+        // intitialLocation: [56.4602727, -2.9786788], // Dundee, UK 
         routeLines: []
       }
     },
@@ -41,21 +42,21 @@
       this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
       this.map.indoors.on("expand", this.onIndoorMapExpanded);
       this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
-      this.$refs.scroll.loadScrollbar(this.map);
       this.$refs.search.loadSearchbar(this.map);
+      this.$refs.scroll.loadScrollbar(this.map);
     },
     methods:{
+
+      // TODO
+      // - delete routes when exiting a map.
+
       onEnter(){
-        this.map.blueSphere.setEnabled(true);
-        this.map.blueSphere.setLocation(this.intitialLocation);
-        this.map.blueSphere.setIndoorMap("westport_house", 0);
-        //this.map.setView(this.intitialLocation.reverse(), 20);
+
       },
       route(destination){
-        const startPoint = [-2.978629, 56.46024, 0]; // Hardcoded Dundee Coordinates
+        // const startPoint = [-2.978629, 56.46024, 0]; // Hardcoded Dundee Coordinates
+        const startPoint = [-79.6659923, 43.5503476, 0]; // UTM Test Coordinates
         const endPoint = destination;
-        // const startPoint = [-79.6659923, 43.5503476, 0]; // UTM Test Coordinates
-        // const endPoint = [-79.6665724, 43.5505642, 0];
         this.map.routes.getRoute([startPoint, endPoint], this.onRoutesLoaded);
       },
       onRoutesLoaded(routes){
