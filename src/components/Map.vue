@@ -2,6 +2,7 @@
   <div id="app">
     <search-bar :route="route" ref="search"></search-bar>
     <scroll-bar ref="scroll"></scroll-bar>
+    <map-view-button :map="this.map"></map-view-button>
     <div id="map" style="height: 100vh"></div>
   </div>
 </template>
@@ -9,6 +10,7 @@
 <script>
   import SearchBar from "./SearchBar"
   import ScrollBar from "./ScrollBar"
+  import MapViewButton from "./MapViewButton"
   const wrld = require("wrld.js");
   
   export default {
@@ -16,6 +18,7 @@
     components: {
       SearchBar,
       ScrollBar,
+      MapViewButton,
     },
     data() {
       return {
@@ -43,6 +46,7 @@
       this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
       this.$refs.scroll.loadScrollbar(this.map);
       this.$refs.search.loadSearchbar(this.map);
+      //this.$refs.tilt.tiltMap(this.map);
     },
     methods:{
       onEnter(){
