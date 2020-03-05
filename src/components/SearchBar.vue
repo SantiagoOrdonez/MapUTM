@@ -3,6 +3,8 @@
 </template>
 
 <script>
+    import {mapActions, mapGetters} from "vuex";
+
     export default {
         name: 'search-bar',
         props: {
@@ -27,17 +29,33 @@
                 map: null,
             }
         },
+
+        computed: mapGetters({
+            // Only re-evaluate when its reactive dependencies are changed
+            routeLinesLength: 'getRouteLinesLength',
+            routeLinesRoutes: 'getRouteLinesRoutes'
+        }),
+
         methods: {
+            ...mapActions([
+				'removeRoute'
+            ]),
             loadSearchbar(map) {
                 this.map = map;
                 const searchbar = new window.WrldSearchbar("searchbar-widget-container", this.map, this.searchbarConfig);
                 searchbar.on("searchresultselect", this.onResultSelect);
+                searchbar.on("searchresultsclear", this.onResultsClear);
             },
             onResultSelect(event) {
                 this.map.indoors.setFloor(event.result.data.floor_id);
                 this.map.setView(event.result.location.latLng, 20);
                 this.route({map: this.map, destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]});
             },
+            onResultsClear() {
+                for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
+                    this.map.removeLayer(this.routeLinesRoutes[routeIndex]);
+                }
+            }
         },
     };
 </script>

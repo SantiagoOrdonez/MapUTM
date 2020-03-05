@@ -23,7 +23,7 @@
             return {
                 msg: 'MapUTM',
                 map: null,
-                initialLocation: [43.549, -79.6636], // [56.4602727, -2.9786788], // Dundee, UK // UTM: [43.549, -79.6636]
+                initialLocation: [56.4602727, -2.9786788], // [56.4602727, -2.9786788], // Dundee, UK // UTM: [43.549, -79.6636]
             }
         },
         mounted() {
@@ -53,7 +53,8 @@
         }),
         methods: {
             ...mapActions([
-                'route'
+				'route',
+				'removeRoute'
             ]),
             onEnter() {
                 this.map.blueSphere.setEnabled(true);
@@ -62,9 +63,8 @@
                 // this.map.setView(this.intitialLocation.reverse(), 20);
             },
             onIndoorMapExited() {
-                for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
-                    this.map.removeLayer(this.routeLinesRoutes[routeIndex]);
-                }
+                this.removeRoute(this.map);
+				this.map.indoors.exit();
             },
             onIndoorMapExpanded() {
                 for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
@@ -73,13 +73,9 @@
             },
             onIndoorMapCollapsed() {
                 for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
-                    console.log(routeIndex);
                     window.L.setOptions(this.routeLinesRoutes[routeIndex], {displayOption: "currentFloor"});
                 }
-            },
-            exitIndoors() {
-                this.map.indoors.exit();
-            },
+			}
         }
     }
 </script>

@@ -12,13 +12,17 @@ export default {
                         indoorMapId: step.indoorMapId,
                         indoorMapFloorId: step.indoorMapFloorId
                     });
-                routeLine.addTo(map);
+                routeLine.addTo(map); //
                 routeLines.push(routeLine);
             }
             commit('updateRoutes', routeLines);
         }
         map.routes.getRoute([startPoint, endPoint], onRoutesLoaded);
     },
-
-
+    removeRoute({commit}, map) {
+        for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
+            map.removeLayer(this.routeLinesRoutes[routeIndex]);
+        }
+        commit('updateRoutes', []);
+    }
 };
