@@ -3,13 +3,9 @@
 </template>
 
 <script>
+
     export default {
         name: 'search-bar',
-        props: {
-            route: {
-                type: Function
-            },
-        },
         data() {
             return {
                 searchbarConfig: {
@@ -36,7 +32,12 @@
             onResultSelect(event) {
                 this.map.indoors.setFloor(event.result.data.floor_id);
                 this.map.setView(event.result.location.latLng, 20);
-                this.route({map: this.map, destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]});
+                this.$store.dispatch('route', {
+                    map: this.map,
+                    destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]
+                }).then((response) => {
+                    console.log(response);
+                })
             },
         },
     };
