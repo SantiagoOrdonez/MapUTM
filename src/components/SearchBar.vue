@@ -38,7 +38,8 @@
 
         methods: {
             ...mapActions([
-				'removeRoute'
+                'removeRoute',
+                'route'
             ]),
             loadSearchbar(map) {
                 this.map = map;
@@ -47,14 +48,14 @@
                 searchbar.on("searchresultsclear", this.onResultsClear);
             },
             onResultSelect(event) {
+                this.removeRoute(this.map);
                 this.map.indoors.setFloor(event.result.data.floor_id);
                 this.map.setView(event.result.location.latLng, 20);
                 this.route({map: this.map, destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]});
             },
             onResultsClear() {
-                for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
-                    this.map.removeLayer(this.routeLinesRoutes[routeIndex]);
-                }
+                console.log("If Post doesn't take me, Coronavirus will.");
+                this.removeRoute(this.map);
             }
         },
     };
@@ -62,8 +63,8 @@
 
 <style>
     #searchbar-widget-container {
-        top: 95px;
+        top: 20px;
         left: 20px;
-        height: 96vh;
+        height: 90vh;
     }
 </style>

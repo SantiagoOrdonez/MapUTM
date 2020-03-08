@@ -2,7 +2,7 @@
     <div id="app">
         <search-bar :route="route" ref="search"></search-bar>
         <scroll-bar ref="scroll"></scroll-bar>
-        <div id="map" style="height: 100vh"></div>
+        <div id="map" style="height: 96vh"></div>
     </div>
 </template>
 
@@ -63,7 +63,7 @@
                 // this.map.setView(this.intitialLocation.reverse(), 20);
             },
             onIndoorMapExited() {
-                this.removeRoute(this.map);
+				this.removeRoute(this.map);
 				this.map.indoors.exit();
             },
             onIndoorMapExpanded() {
@@ -83,7 +83,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     h3 {
-        margin: 40px 0 0;
+        margin: 0px 0 0;
     }
 
     ul {
@@ -93,7 +93,7 @@
 
     li {
         display: inline-block;
-        margin: 0 10px;
+        margin: 0 0px;
     }
 
     a {

@@ -12,17 +12,22 @@ export default {
                         indoorMapId: step.indoorMapId,
                         indoorMapFloorId: step.indoorMapFloorId
                     });
-                routeLine.addTo(map); //
+                routeLine.addTo(map);
                 routeLines.push(routeLine);
             }
             commit('updateRoutes', routeLines);
         }
         map.routes.getRoute([startPoint, endPoint], onRoutesLoaded);
     },
-    removeRoute({commit}, map) {
-        for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
-            map.removeLayer(this.routeLinesRoutes[routeIndex]);
+    
+    removeRoute({commit, getters}, map) {
+        var length = getters.getRouteLinesLength;
+        var routeLines = getters.getRouteLinesRoutes;
+        // console.log(length, routeLines);
+        for (let routeIndex = 0; routeIndex < length; routeIndex++) {
+            map.removeLayer(routeLines[routeIndex]);
         }
+        
         commit('updateRoutes', []);
     }
 };
