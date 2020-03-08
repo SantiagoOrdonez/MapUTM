@@ -14,18 +14,35 @@
     const wrld = require("wrld.js");
 
     export default {
+        
+        /**
+         * 
+         */
         name: 'app',
+        
+        /**
+         * 
+         */
         components: {
             SearchBar,
             ScrollBar,
         },
+
+        /**
+         * 
+         */
         data() {
             return {
                 msg: 'MapUTM',
                 map: null,
-                initialLocation: [56.4602727, -2.9786788], // [56.4602727, -2.9786788], // Dundee, UK // UTM: [43.549, -79.6636]
+                initialLocation: [56.4602727, -2.9786788], // Dundee, UK 
+                // initialLocation: [43.549, -79.6636] // UTM
             }
         },
+
+        /**
+         * 
+         */
         mounted() {
             this.map = wrld.map("map", "5378c39112e718bdeb6f19df0168d1cf", {
                 center: this.initialLocation,
@@ -38,39 +55,74 @@
                 coverageTreeManifest: "https://webgl-cdn1.wrld3d.com/chunk/indoor_maps/api_requests/EIM-c3eb2f77-20e3-4b6b-bb11-784ced915fa0_2020_02_09_05_33_40/webgl_manifest.bin.gz",
                 height: 500
             });
+
             this.map.indoors.on("indoormapenter", this.onEnter);
             this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
             this.map.indoors.on("expand", this.onIndoorMapExpanded);
             this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
             this.$refs.search.loadSearchbar(this.map);
             this.$refs.scroll.loadScrollbar(this.map);
-
         },
+        
+        /**
+         * 
+         */
         computed: mapGetters({
             // Only re-evaluate when its reactive dependencies are changed
             routeLinesLength: 'getRouteLinesLength',
             routeLinesRoutes: 'getRouteLinesRoutes'
         }),
+        
+        /**
+         * 
+         */
         methods: {
+            
+            /**
+             * mapActions dispatch actions in components.
+             * 
+             * See 'actions.js' for documentation and 
+             * implementations of available actions.
+             * 
+             * For more information, visit:
+             * https://vuex.vuejs.org/guide/actions.html
+             */
             ...mapActions([
 				'route',
 				'removeRoute'
             ]),
+            
+            /**
+             * Move the camera into an indoor map.
+             */
             onEnter() {
+                console.log("entered");
                 this.map.blueSphere.setEnabled(true);
                 this.map.blueSphere.setLocation(this.initialLocation);
                 this.map.blueSphere.setIndoorMap("westport_house", 0);
                 // this.map.setView(this.intitialLocation.reverse(), 20);
             },
+            
+            /**
+             * When viewing an indoor map, exits back to the exterior view.
+             */
             onIndoorMapExited() {
 				this.removeRoute(this.map);
 				this.map.indoors.exit();
             },
+            
+            /**
+             * Transition to an expanded view of the indoor map, showing all floors.
+             */
             onIndoorMapExpanded() {
                 for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
                     window.L.setOptions(this.routeLinesRoutes[routeIndex], {displayOption: "currentIndoorMap"});
                 }
             },
+
+            /**
+             * When expanded, transition back to the normal, collapsed view of an indoor map.
+             */
             onIndoorMapCollapsed() {
                 for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
                     window.L.setOptions(this.routeLinesRoutes[routeIndex], {displayOption: "currentFloor"});
@@ -104,5 +156,4 @@
         width: 100%;
         height: 100%;
     }
-
 </style>

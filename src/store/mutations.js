@@ -1,6 +1,11 @@
 export default {
+
+    /**
+     * 
+     * @param {*} state 
+     * @param {*} routeLines 
+     */
     updateRoutes(state, routeLines) {
-        console.log(routeLines);
         state.routeLines = [...routeLines];
     }
 };

@@ -6,12 +6,24 @@
     import {mapActions, mapGetters} from "vuex";
 
     export default {
+        
+        /**
+         *  
+         */
         name: 'search-bar',
+
+        /**
+         *  
+         */
         props: {
             route: {
                 type: Function
             },
         },
+
+        /**
+         *  
+         */
         data() {
             return {
                 searchbarConfig: {
@@ -27,34 +39,69 @@
                     ]
                 },
                 map: null,
+                selected: false
             }
         },
 
+        /**
+         * 
+         */
         computed: mapGetters({
             // Only re-evaluate when its reactive dependencies are changed
             routeLinesLength: 'getRouteLinesLength',
             routeLinesRoutes: 'getRouteLinesRoutes'
         }),
 
+        /**
+         * 
+         */
         methods: {
+
+            /**
+             * mapActions dispatch actions in components.
+             * 
+             * See 'actions.js' for documentation and 
+             * implementations of available actions. 
+             * 
+             * For more information, visit:
+             * https://vuex.vuejs.org/guide/actions.html
+             */
             ...mapActions([
                 'removeRoute',
                 'route'
             ]),
+
+            /**
+             * Loads the searchbar.
+             * @param {L.Wrld.map} map
+             */
             loadSearchbar(map) {
                 this.map = map;
                 const searchbar = new window.WrldSearchbar("searchbar-widget-container", this.map, this.searchbarConfig);
                 searchbar.on("searchresultselect", this.onResultSelect);
                 searchbar.on("searchresultsclear", this.onResultsClear);
             },
+
+            /**
+             * Data for the Place selected by the user.
+             * @param {Event} event
+             */
             onResultSelect(event) {
-                this.removeRoute(this.map);
-                this.map.indoors.setFloor(event.result.data.floor_id);
-                this.map.setView(event.result.location.latLng, 20);
-                this.route({map: this.map, destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]});
+                if (!this.selected) {
+                    // TODO set 2D top view when routing
+                    this.selected = true;
+                    this.removeRoute(this.map);
+                    this.map.indoors.setFloor(event.result.data.floor_id);
+                    this.map.setView(event.result.location.latLng, 20);
+                    this.route({map: this.map, destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]});
+                }
             },
+
+            /**
+             * Clears any search results.
+             */
             onResultsClear() {
-                console.log("If Post doesn't take me, Coronavirus will.");
+                this.selected = false;
                 this.removeRoute(this.map);
             }
         },
