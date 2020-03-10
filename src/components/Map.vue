@@ -1,8 +1,9 @@
 <template>
     <div id="app">
-        <search-bar :route="route" ref="search"></search-bar>
-        <scroll-bar ref="scroll"></scroll-bar>
-        <div id="map" style="height: 100vh"></div>
+        <div id="map" style="height: 100vh">
+            <search-bar :route="route" ref="search"></search-bar>
+            <scroll-bar ref="scroll"></scroll-bar>
+        </div>
     </div>
 </template>
 
@@ -23,7 +24,7 @@
             return {
                 msg: 'MapUTM',
                 map: null,
-                initialLocation: [43.549, -79.6636], // [56.4602727, -2.9786788], // Dundee, UK // UTM: [43.549, -79.6636]
+                initialLocation: [56.4602727, -2.9786788], // [56.4602727, -2.9786788], // Dundee, UK // UTM: [43.549, -79.6636]
             }
         },
         mounted() {
@@ -56,10 +57,6 @@
                 'route'
             ]),
             onEnter() {
-                this.map.blueSphere.setEnabled(true);
-                this.map.blueSphere.setLocation(this.initialLocation);
-                this.map.blueSphere.setIndoorMap("westport_house", 0);
-                // this.map.setView(this.intitialLocation.reverse(), 20);
             },
             onIndoorMapExited() {
                 for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
@@ -107,6 +104,7 @@
     #map {
         width: 100%;
         height: 100%;
+        border: 4px solid black;
     }
 
 </style>
