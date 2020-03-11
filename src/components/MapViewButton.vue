@@ -1,6 +1,6 @@
 <template>
-    <div id="eegeo-tilt-button-container" class="eegeo-tilt-button-container">
-        <button class="eegeo-ripple-button eegeo-tilt-button" v-on:click="toggleView">{{this.mapViewText}}</button>
+    <div id="map-view-button-container" class="map-view-button-container">
+        <button class="map-view-button" v-on:click="toggleView">{{this.mapViewText}}</button>
     </div>
 </template>
  
@@ -33,27 +33,37 @@ export default {
 
 <style>
 
-.eegeo-tilt-button-container {
+.map-view-button-container {
     position:absolute;
     right:calc(32px * 2 + 10px * 3);
     top:95px;
     transition:right 500ms;
     box-shadow:0 2px 4px 2px rgba(0,0,0,0.5);
     z-index:100;
-    width:44px;
-    height:44px
+    width:32px;
+    height:32px
 }
  
-.eegeo-tilt-button{
-    width:inherit;
-    height:inherit;
-    font-family:"Open Sans", sans-serif;
-    font-size:16pt;
-    color:#606060;
-    font-weight:600
+.map-view-button{
+    background-color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    width: inherit;
+    height: inherit;
+    font-family: "Open Sans", sans-serif;
+    font-size: 13pt;
+    color: #606060;
+    font-weight: 600;
 }
  
-.eegeo-tilt-button:hover{
+.map-view-button:hover{
     color:#000060
 }
 

@@ -46,7 +46,6 @@
       this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
       this.$refs.scroll.loadScrollbar(this.map);
       this.$refs.search.loadSearchbar(this.map);
-      //this.$refs.tilt.tiltMap(this.map);
     },
     methods:{
       onEnter(){
