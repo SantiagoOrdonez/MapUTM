@@ -11,9 +11,11 @@
 
 <script>
 import Map from './components/Map.vue'
+import store from './store'
 
 export default {
   name: 'App',
+  store,
   components: {
     Map
   }
