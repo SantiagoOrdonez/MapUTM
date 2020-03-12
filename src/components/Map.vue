@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <search-bar :route="route" ref="search"></search-bar>
+        <search-bar ref="search"></search-bar>
         <scroll-bar ref="scroll"></scroll-bar>
         <div id="map" style="height: 100vh"></div>
     </div>
@@ -9,7 +9,7 @@
 <script>
     import SearchBar from "./SearchBar"
     import ScrollBar from "./ScrollBar"
-    import {mapActions, mapGetters} from "vuex";
+    import {mapGetters} from "vuex";
 
     const wrld = require("wrld.js");
 
@@ -52,9 +52,6 @@
             routeLinesRoutes: 'getRouteLinesRoutes'
         }),
         methods: {
-            ...mapActions([
-                'route'
-            ]),
             onEnter() {
                 this.map.blueSphere.setEnabled(true);
                 this.map.blueSphere.setLocation(this.initialLocation);
