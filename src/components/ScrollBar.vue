@@ -5,14 +5,8 @@
 <script>
     export default {
 
-        /**
-         * 
-         */
         name: 'scroll-bar',
 
-        /**
-         * 
-         */
         methods: {
             
             /**

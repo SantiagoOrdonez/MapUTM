@@ -6,24 +6,15 @@
     import {mapActions, mapGetters} from "vuex";
 
     export default {
-        
-        /**
-         *  
-         */
+
         name: 'search-bar',
 
-        /**
-         *  
-         */
         props: {
             route: {
                 type: Function
             },
         },
 
-        /**
-         *  
-         */
         data() {
             return {
                 searchbarConfig: {
@@ -43,29 +34,14 @@
             }
         },
 
-        /**
-         * 
-         */
         computed: mapGetters({
             // Only re-evaluate when its reactive dependencies are changed
             routeLinesLength: 'getRouteLinesLength',
             routeLinesRoutes: 'getRouteLinesRoutes'
         }),
 
-        /**
-         * 
-         */
         methods: {
 
-            /**
-             * mapActions dispatch actions in components.
-             * 
-             * See 'actions.js' for documentation and 
-             * implementations of available actions. 
-             * 
-             * For more information, visit:
-             * https://vuex.vuejs.org/guide/actions.html
-             */
             ...mapActions([
                 'removeRoute',
                 'route'
