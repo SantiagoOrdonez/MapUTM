@@ -44,7 +44,7 @@
                 height: 500
             });
 
-            this.map.indoors.on("indoormapenter", this.onEnter);
+            this.map.indoors.on("indoormapenter", this. onIndoorMapEnter);
             this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
             this.map.indoors.on("expand", this.onIndoorMapExpanded);
             this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
@@ -68,7 +68,7 @@
             /**
              * Fired when an IndoorMap is entered.
              */
-            onEnter() {
+             onIndoorMapEnter() {
                 console.log("entered");
                 this.map.blueSphere.setEnabled(true);
                 this.map.blueSphere.setLocation(this.initialLocation);
