@@ -66,7 +66,7 @@
             ]),
             
             /**
-             * Move the camera into an indoor map.
+             * Fired when an IndoorMap is entered.
              */
             onEnter() {
                 console.log("entered");
