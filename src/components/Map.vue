@@ -10,7 +10,8 @@
 <script>
     import SearchBar from "./SearchBar"
     import ScrollBar from "./ScrollBar"
-    import {mapActions, mapGetters} from "vuex";
+    import MapViewButton from "./MapViewButton"
+    import {mapGetters} from "vuex";
 
     const wrld = require("wrld.js");
 
@@ -19,6 +20,7 @@
         components: {
             SearchBar,
             ScrollBar,
+            MapViewButton,
         },
         data() {
             return {
@@ -44,7 +46,6 @@
             this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
             this.$refs.search.loadSearchbar(this.map);
             this.$refs.scroll.loadScrollbar(this.map);
-
         },
         computed: mapGetters({
             // Only re-evaluate when its reactive dependencies are changed
