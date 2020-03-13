@@ -39,7 +39,6 @@
                 coverageTreeManifest: "https://webgl-cdn1.wrld3d.com/chunk/indoor_maps/api_requests/EIM-c3eb2f77-20e3-4b6b-bb11-784ced915fa0_2020_02_09_05_33_40/webgl_manifest.bin.gz",
                 height: 500
             });
-            this.map.indoors.on("indoormapenter", this.onEnter);
             this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
             this.map.indoors.on("expand", this.onIndoorMapExpanded);
             this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
@@ -56,8 +55,6 @@
             ...mapActions([
                 'route'
             ]),
-            onEnter() {
-            },
             onIndoorMapExited() {
                 for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
                     this.map.removeLayer(this.routeLinesRoutes[routeIndex]);
