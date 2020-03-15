@@ -1,9 +1,9 @@
 <template>
     <div id="app">
-        <div id="map" style="height: 100vh">
-            <search-bar :route="route" ref="search"></search-bar>
-            <scroll-bar ref="scroll"></scroll-bar>
-        </div>
+        <search-bar ref="search"></search-bar>
+        <scroll-bar ref="scroll"></scroll-bar>
+        <map-view-button :map="this.map"></map-view-button>
+        <div id="map" style="height: 100vh"></div>
     </div>
 </template>
 
@@ -53,9 +53,6 @@
             routeLinesRoutes: 'getRouteLinesRoutes'
         }),
         methods: {
-            ...mapActions([
-                'route'
-            ]),
             onIndoorMapExited() {
                 for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
                     this.map.removeLayer(this.routeLinesRoutes[routeIndex]);

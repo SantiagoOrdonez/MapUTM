@@ -34,8 +34,6 @@
 
                 this.map.setView(event.result.location.latLng, 20);
 
-                this.route({map: this.map, destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]});
-
                 const markerController = new window.WrldMarkerController(this.map, { poiViewsEnabled: true });
                 const markerInfo = {
                     poiView: { 
