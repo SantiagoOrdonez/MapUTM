@@ -21,7 +21,9 @@ export default {
                 const routeLine = new window.L.polyline(step.points,
                     {
                         indoorMapId: step.indoorMapId,
-                        indoorMapFloorId: step.indoorMapFloorId
+                        indoorMapFloorId: step.indoorMapFloorId,
+                        weight: 5,
+                        color: '#FFFF00',
                     });
                 routeLine.addTo(map);
                 routeLines.push(routeLine);
