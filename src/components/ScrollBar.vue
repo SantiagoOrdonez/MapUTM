@@ -3,16 +3,18 @@
 </template>
  
 <script>
-export default {
-    name: 'scroll-bar',
-    methods: {
-        loadScrollbar(map) {
-            this.map = map;
-            var indoorControl = new window.WrldIndoorControl("scrollbar-container", this.map);
-            return indoorControl;
+    export default {
+
+        name: 'scroll-bar',
+
+        methods: {
+            loadScrollbar(map) {
+                this.map = map;
+                var indoorControl = new window.WrldIndoorControl("scrollbar-container", this.map);
+                return indoorControl;
+            },
         },
-    },
-}
+    }
 </script>
 
 <style>

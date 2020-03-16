@@ -10,7 +10,6 @@ const state = {
     routeLines: []
 };
 
-
 export default new Vuex.Store({
     state,
     actions,
