@@ -5,7 +5,10 @@ export default {
      * @param {*} param0 
      * @param {*} param1 
      */
-    route({commit}, {map, destination}) {
+    route({commit, dispatch}, {map, destination}) {
+
+        dispatch('removeRoute', map);
+
         const startPoint = [-2.978629, 56.46024, 0]; // Hardcoded Dundee Coordinates
         const endPoint = destination;
 

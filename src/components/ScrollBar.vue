@@ -8,12 +8,6 @@
         name: 'scroll-bar',
 
         methods: {
-            
-            /**
-             * Load the scrollbar.
-             * @param {L.Wrld.map} map
-             * @return {WrldIndoorControl} indoorControl
-             */
             loadScrollbar(map) {
                 this.map = map;
                 var indoorControl = new window.WrldIndoorControl("scrollbar-container", this.map);
@@ -25,8 +19,8 @@
 
 <style>
     .eegeo-indoor-control {
-        top: 20px;
-        right: 20px;
+        top: 10px;
+        right: 10px;
         float: right;
     }
 </style>

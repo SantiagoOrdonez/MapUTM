@@ -1,7 +1,8 @@
 <template>
     <div id="app">
-        <search-bar :route="route" ref="search"></search-bar>
+        <search-bar ref="search"></search-bar>
         <scroll-bar ref="scroll"></scroll-bar>
+        <map-view-button :map="this.map"></map-view-button>
         <div id="map" style="height: 96vh"></div>
     </div>
 </template>
@@ -9,7 +10,8 @@
 <script>
     import SearchBar from "./SearchBar"
     import ScrollBar from "./ScrollBar"
-    import {mapActions, mapGetters} from "vuex";
+    import MapViewButton from "./MapViewButton"
+    import {mapGetters} from "vuex";
 
     const wrld = require("wrld.js");
 
@@ -20,6 +22,7 @@
         components: {
             SearchBar,
             ScrollBar,
+            MapViewButton,
         },
 
         data() {
@@ -44,7 +47,7 @@
                 height: 500
             });
 
-            this.map.indoors.on("indoormapenter", this. onIndoorMapEnter);
+            this.map.indoors.on("indoormapenter", this.onIndoorMapEnter);
             this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
             this.map.indoors.on("expand", this.onIndoorMapExpanded);
             this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
@@ -59,15 +62,6 @@
         }),
         
         methods: {
-            
-            ...mapActions([
-				'route',
-				'removeRoute'
-            ]),
-            
-            /**
-             * Fired when an IndoorMap is entered.
-             */
              onIndoorMapEnter() {
                 console.log("entered");
                 this.map.blueSphere.setEnabled(true);
@@ -80,7 +74,11 @@
              * When viewing an indoor map, exits back to the exterior view.
              */
             onIndoorMapExited() {
-				this.removeRoute(this.map);
+                this.$store.dispatch('removeRoute', this.map,
+                ).then((response) => {
+                    console.log(response);
+                });
+                
 				this.map.indoors.exit();
             },
             

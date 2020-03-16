@@ -3,17 +3,16 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from "vuex";
+    import {mapGetters, mapActions} from "vuex";
 
     export default {
+        
+        ...mapActions([
+            'route',
+            'removeRoute'
+        ]),
 
         name: 'search-bar',
-
-        props: {
-            route: {
-                type: Function
-            },
-        },
 
         data() {
             return {
@@ -42,11 +41,6 @@
 
         methods: {
 
-            ...mapActions([
-                'removeRoute',
-                'route'
-            ]),
-
             /**
              * Loads the searchbar.
              * @param {L.Wrld.map} map
@@ -62,23 +56,27 @@
              * Data for the Place selected by the user.
              * @param {Event} event
              */
-            onResultSelect(event) {
-                if (!this.selected) {
-                    // TODO set 2D top view when routing
-                    this.selected = true;
-                    this.removeRoute(this.map);
-                    this.map.indoors.setFloor(event.result.data.floor_id);
-                    this.map.setView(event.result.location.latLng, 20);
-                    this.route({map: this.map, destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]});
-                }
+            async onResultSelect(event) {
+                console.log(this.$store.state.routeLines.length == 0)
+
+                if (this.$store.state.routeLines.length == 0) return
+                
+                this.map.indoors.setFloor(event.result.data.floor_id);
+                this.map.setView(event.result.location.latLng, 20);
+                                    
+                await this.$store.dispatch('route', {
+                    map: this.map,
+                    destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]
+                })
             },
 
             /**
              * Clears any search results.
              */
-            onResultsClear() {
+            async onResultsClear() {
                 this.selected = false;
-                this.removeRoute(this.map);
+                
+                await this.$store.dispatch('removeRoute', this.map);
             }
         },
     };
