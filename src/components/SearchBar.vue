@@ -3,8 +3,7 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
-    import {mapGetters} from "vuex";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: 'search-bar',
@@ -55,54 +54,28 @@
              */
             onResultSelect(event) {
 
-                ///////////////////////////////////////////////////////
                 if (this.isRouting) {
                     return;
                 }
-                // this.removeRoute(this.map);
 
                 this.$store.dispatch('setRouting', {value: true});
 
                 this.map.indoors.setFloor(event.result.data.floor_id);
 
                 this.map.setView(event.result.location.latLng, 20);
-                //////////////////////////////////////////////////////////
-
-                // const markerController = new window.WrldMarkerController(this.map, { poiViewsEnabled: true });
-                // const markerInfo = {
-                //     poiView: { 
-                //         title: "You are on floor " + 0 + ". Your room is on floor " + event.result.data.floor_id + ".",
-                //     },
-                //     floorIndex: 0,
-                // }
-
-                // markerController.addMarker(1, [56.4602727, -2.9786788], markerInfo);
-                // markerController.showMarker(1);
-                // setTimeout(function () {
-                //     markerController.openPoiCard(1);},
-                //     500);
-                // setTimeout(function () {
-                //     markerController.closePoiCard(1);},
-                //     3000);
 
                 this.$store.dispatch('route', {
                     map: this.map,
                     destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]
                 })
-                
-                // .then((response) => {
-                //     console.log(response);
-                // })
             },
 
             /**
              * Clears any search results.
              */
             onResultsClear() {
-                //////////////////////////////////////////////////////////
                 this.$store.dispatch('setRouting', {value: false});
                 this.removeRoute(this.map);
-                //////////////////////////////////////////////////////////
             }
         },
     };
