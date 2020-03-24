@@ -28,15 +28,15 @@
 
         computed: mapGetters({
             // Only re-evaluate when its reactive dependencies are changed
-            isRouting: 'routing'
+            isRouting: 'isRouting'
         }),
 
         methods: {
             ...mapActions([
                 'removeRoute',
-                'getRouting',
                 'setRouting'
             ]),
+
 
             /**
              * Loads the searchbar.
@@ -56,19 +56,12 @@
             onResultSelect(event) {
 
                 ///////////////////////////////////////////////////////
-                console.log("searchbar this.isrouting1", this.$store.dispatch('getRouting'));
-
-                if (this.$store.dispatch('getRouting') == true) {
-                    return null;
+                if (this.isRouting) {
+                    return;
                 }
-
-                // this.isRouting = true;
-                
-                this.removeRoute(this.map);
+                // this.removeRoute(this.map);
 
                 this.$store.dispatch('setRouting', {value: true});
-
-                console.log("searchbar this.isrouting2", this.$store.dispatch('getRouting'));
 
                 this.map.indoors.setFloor(event.result.data.floor_id);
 

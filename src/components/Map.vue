@@ -16,9 +16,9 @@
     const wrld = require("wrld.js");
 
     export default {
-        
+
         name: 'app',
-        
+
         components: {
             SearchBar,
             ScrollBar,
@@ -58,31 +58,34 @@
             // Only re-evaluate when its reactive dependencies are changed
             routeLinesLength: 'getRouteLinesLength',
             routeLinesRoutes: 'getRouteLinesRoutes',
-            isRouting: 'routing'
+            isRouting: 'isRouting'
         }),
-        
+
         methods: {
 
             ...mapActions([
-                'getRouting',
-                'setRouting'
+                'setRouting',
+                'removeRoute'
             ]),
 
             onIndoorMapExited() {
                 //////////////////////////////////////////////////////////
-                this.removeRoute(this.map);
+                if (this.isRouting) {
+                    this.setRouting(false);
+                    this.removeRoute(this.map);
+                }
 
-                console.log("map this.isrouting", this.isRouting);
+                // console.log("map this.isrouting", this.isRouting);
 
                 // this.isRouting = false;
-                this.setRouting(false);
 
-                console.log("map this.isrouting", this.isRouting);
+
+                // console.log("map this.isrouting", this.isRouting);
                 //////////////////////////////////////////////////////////
-                
+
                 this.map.indoors.exit();
             },
-            
+
             /**
              * Transition to an expanded view of the indoor map, showing all floors.
              */
@@ -99,7 +102,7 @@
                 for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
                     window.L.setOptions(this.routeLinesRoutes[routeIndex], {displayOption: "currentFloor"});
                 }
-			}
+            }
         }
     }
 </script>

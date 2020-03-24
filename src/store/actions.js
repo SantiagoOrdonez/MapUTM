@@ -43,6 +43,7 @@ export default {
      * @param {L.Wrld.map} map 
      */
     removeRoute({commit, getters}, map) {
+        console.log("Removing Route");
         var length = getters.getRouteLinesLength;
         var routeLines = getters.getRouteLinesRoutes;
         for (let routeIndex = 0; routeIndex < length; routeIndex++) {
@@ -55,9 +56,5 @@ export default {
 
     setRouting({commit}, value) {
         commit('updateRouting', value);
-    },
-
-    getRouting({getters}) {
-        return getters.isRouting;
     }
 };
