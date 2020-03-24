@@ -7,7 +7,8 @@ import getters from "./getters"
 Vue.use(Vuex);
 
 const state = {
-    routeLines: []
+    routeLines: [],
+    routing: false
 };
 
 export default new Vuex.Store({

@@ -1,11 +1,9 @@
 export default {
-
-    /**
-     * 
-     * @param {*} state 
-     * @param {*} routeLines 
-     */
     updateRoutes(state, routeLines) {
         state.routeLines = [...routeLines];
+    },
+
+    updateRouting(state, isRouting) {
+        state.routing = isRouting;
     }
 };

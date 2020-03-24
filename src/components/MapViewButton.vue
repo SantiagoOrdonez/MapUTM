@@ -26,7 +26,6 @@ export default {
             this.isTopDown = !this.isTopDown;
             this.mapViewText = this.isTopDown ? '3D' : '2D';
         }
-
     },
 }
 </script>
@@ -35,8 +34,8 @@ export default {
 
 .map-view-button-container {
     position:absolute;
-    right:calc(32px * 2 + 10px * 3);
-    top:95px;
+    right:20px;
+    top:20px;
     transition:right 500ms;
     box-shadow:0 2px 4px 2px rgba(0,0,0,0.5);
     z-index:100;

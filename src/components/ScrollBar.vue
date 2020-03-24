@@ -19,8 +19,8 @@
 
 <style>
 .eegeo-indoor-control {
-    top: 85px;
-    right: 20px;
+    top: 55px;
+    right: 10px;
     float: right;
 }
 </style>
