@@ -69,20 +69,10 @@
             ]),
 
             onIndoorMapExited() {
-                //////////////////////////////////////////////////////////
                 if (this.isRouting) {
                     this.setRouting(false);
                     this.removeRoute(this.map);
                 }
-
-                // console.log("map this.isrouting", this.isRouting);
-
-                // this.isRouting = false;
-
-
-                // console.log("map this.isrouting", this.isRouting);
-                //////////////////////////////////////////////////////////
-
                 this.map.indoors.exit();
             },
 
