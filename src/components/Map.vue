@@ -3,6 +3,7 @@
         <search-bar ref="search"></search-bar>
         <scroll-bar ref="scroll"></scroll-bar>
         <map-view-button :map="this.map"></map-view-button>
+        <pop-up :map="this.map"></pop-up>
         <div id="map" style="height: 96vh"></div>
     </div>
 </template>
@@ -11,6 +12,7 @@
     import SearchBar from "./SearchBar"
     import ScrollBar from "./ScrollBar"
     import MapViewButton from "./MapViewButton"
+    import PopUp from "./PopUp"
     import {mapActions, mapGetters} from "vuex";
 
     const wrld = require("wrld.js");
@@ -23,6 +25,7 @@
             SearchBar,
             ScrollBar,
             MapViewButton,
+            PopUp
         },
 
         data() {
