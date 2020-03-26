@@ -91,7 +91,7 @@
              */
             onIndoorMapFloorChange() {
                 if (this.isTopDown) {
-                    setTimeout(() => this.isTopDown ? this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0) : this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(45), 100);
+                    setTimeout(() => this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0), 100); 
                 }
             }
         }

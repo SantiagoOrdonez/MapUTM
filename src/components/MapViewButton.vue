@@ -21,8 +21,7 @@ export default {
             "updateIsTopDown"
             ]),
         updateView(){
-            this.updateIsTopDown();
-            this.getIsTopDown ? this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0) : this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(45);
+            this.updateIsTopDown(this.map);
         }
     },
 }
