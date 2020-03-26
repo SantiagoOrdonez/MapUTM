@@ -7,7 +7,9 @@ import getters from "./getters"
 Vue.use(Vuex);
 
 const state = {
-    routeLines: []
+    routeLines: [],
+    isTopDown: false,
+    mapViewText: "2D"
 };
 
 export default new Vuex.Store({

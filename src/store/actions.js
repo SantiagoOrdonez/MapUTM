@@ -48,5 +48,9 @@ export default {
         }
         
         commit('updateRoutes', []);
+    },
+    updateIsTopDown({commit, getters}) {
+        commit('setIsTopDown', {isTopDown: !getters.getIsTopDown,
+                                 mapViewText: !getters.getIsTopDown ? '3D' : '2D'});
     }
 };

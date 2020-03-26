@@ -11,7 +11,7 @@
     import SearchBar from "./SearchBar"
     import ScrollBar from "./ScrollBar"
     import MapViewButton from "./MapViewButton"
-    import {mapGetters} from "vuex";
+    import {mapGetters, mapActions} from "vuex";
 
     const wrld = require("wrld.js");
 
@@ -49,6 +49,7 @@
             this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
             this.map.indoors.on("expand", this.onIndoorMapExpanded);
             this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
+            this.map.indoors.on("indoormapfloorchange", this.onIndoorMapFloorChange);
             this.$refs.search.loadSearchbar(this.map);
             this.$refs.scroll.loadScrollbar(this.map);
         },
@@ -56,10 +57,13 @@
         computed: mapGetters({
             // Only re-evaluate when its reactive dependencies are changed
             routeLinesLength: 'getRouteLinesLength',
-            routeLinesRoutes: 'getRouteLinesRoutes'
+            routeLinesRoutes: 'getRouteLinesRoutes',
+            isTopDown: 'getIsTopDown',
         }),
         
         methods: {
+            ...mapActions(["updateIsTopDown", 
+                            "tiltMap"]),
             onIndoorMapExited() {
               this.removeRoute(this.map);
               this.map.indoors.exit();
@@ -81,7 +85,15 @@
                 for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
                     window.L.setOptions(this.routeLinesRoutes[routeIndex], {displayOption: "currentFloor"});
                 }
-			}
+            },
+            /**
+             * When floor changes, alter the tilt of the camera according to the current isTopDown state
+             */
+            onIndoorMapFloorChange() {
+                if (this.isTopDown) {
+                    setTimeout(() => this.isTopDown ? this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0) : this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(45), 100);
+                }
+            }
         }
     }
 </script>
