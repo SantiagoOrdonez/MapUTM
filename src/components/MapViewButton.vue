@@ -1,32 +1,28 @@
 <template>
     <div id="map-view-button-container" class="map-view-button-container">
-        <button class="map-view-button" v-on:click="toggleView">{{this.mapViewText}}</button>
+        <button class="map-view-button" v-on:click="updateView">{{this.getMapViewText}}</button>
+    
     </div>
 </template>
  
 <script>
-
+import {mapGetters, mapActions} from "vuex";
 export default {
     name: 'map-view-button',
     props: {
         map: null
     },
-    data() {
-        return {
-            isTopDown: false,
-            mapViewText: "2D"
-        }
-    },
+    computed: mapGetters({
+                getMapViewText: "getMapViewText",
+                getIsTopDown: "getIsTopDown"
+    }),
     methods: {
-        tiltMap(headingDegrees, tiltDegrees) {
-            this.map.setCameraHeadingDegrees(headingDegrees).setCameraTiltDegrees(tiltDegrees);
-        },
-        toggleView() {
-            this.isTopDown ? this.tiltMap(45,45) : this.tiltMap(45, 0);
-            this.isTopDown = !this.isTopDown;
-            this.mapViewText = this.isTopDown ? '3D' : '2D';
+        ...mapActions([
+            "updateIsTopDown"
+            ]),
+        updateView(){
+            this.updateIsTopDown(this.map);
         }
-
     },
 }
 </script>

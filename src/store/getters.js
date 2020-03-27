@@ -12,5 +12,19 @@ export default {
      */
     getRouteLinesRoutes: state => {
         return state.routeLines;
+    },
+
+    /**
+     * 
+     */
+    getIsTopDown: state => {
+        return state.isTopDown;
+    },
+
+    /**
+     * 
+     */
+    getMapViewText: state => {
+        return state.mapViewText;
     }
 }
