@@ -9,5 +9,13 @@ export default {
 
     isRouting: state => {
         return state.routing;
+    },
+
+    getIsTopDown: state => {
+        return state.isTopDown;
+    },
+
+    getMapViewText: state => {
+        return state.mapViewText;
     }
 }

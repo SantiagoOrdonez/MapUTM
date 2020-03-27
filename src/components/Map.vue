@@ -11,7 +11,7 @@
     import SearchBar from "./SearchBar"
     import ScrollBar from "./ScrollBar"
     import MapViewButton from "./MapViewButton"
-    import {mapActions, mapGetters} from "vuex";
+    import {mapActions, mapGetters, mapMutations} from "vuex";
 
     const wrld = require("wrld.js");
 
@@ -29,7 +29,6 @@
             return {
                 msg: 'MapUTM',
                 map: null,
-                // initialLocation: [56.4602727, -2.9786788], // Dundee, UK 
                 initialLocation: [43.549, -79.6636] // UTM
             }
         },
@@ -50,6 +49,7 @@
             this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
             this.map.indoors.on("expand", this.onIndoorMapExpanded);
             this.map.indoors.on("collapse", this.onIndoorMapCollapsed);
+            this.map.indoors.on("indoormapfloorchange", this.onIndoorMapFloorChange);
             this.$refs.search.loadSearchbar(this.map);
             this.$refs.scroll.loadScrollbar(this.map);
         },
@@ -58,19 +58,25 @@
             // Only re-evaluate when its reactive dependencies are changed
             routeLinesLength: 'getRouteLinesLength',
             routeLinesRoutes: 'getRouteLinesRoutes',
-            isRouting: 'isRouting'
+            isRouting: 'isRouting',
+            isTopDown: 'getIsTopDown',
         }),
 
         methods: {
 
             ...mapActions([
-                'setRouting',
-                'removeRoute'
-            ]),
+                "setRouting",
+                "removeRoute",
+                "updateIsTopDown", 
+                "tiltMap"]),
 
+            ...mapMutations([
+                "updateRouting" //setIsRouteShowing
+            ]),
+            
             onIndoorMapExited() {
                 if (this.isRouting) {
-                    this.setRouting(false);
+                    this.updateRouting(false);
                     this.removeRoute(this.map);
                 }
                 this.map.indoors.exit();
@@ -91,6 +97,15 @@
             onIndoorMapCollapsed() {
                 for (let routeIndex = 0; routeIndex < this.routeLinesLength; ++routeIndex) {
                     window.L.setOptions(this.routeLinesRoutes[routeIndex], {displayOption: "currentFloor"});
+                }
+            },
+
+            /**
+             * When floor changes, alter the tilt of the camera according to the current isTopDown state
+             */
+            onIndoorMapFloorChange() {
+                if (this.isTopDown) {
+                    setTimeout(() => this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0), 100); 
                 }
             }
         }

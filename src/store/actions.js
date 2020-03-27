@@ -52,8 +52,9 @@ export default {
         commit('updateRoutes', []);
         commit('updateRouting', false);
     },
-
-    setRouting({commit}, value) {
-        commit('updateRouting', value);
+    updateIsTopDown({commit, getters}, map) {
+        commit('setIsTopDown', {isTopDown: !getters.getIsTopDown,
+                                 mapViewText: !getters.getIsTopDown ? '3D' : '2D'});
+        getters.getIsTopDown ? map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0) : map.setCameraHeadingDegrees(45).setCameraTiltDegrees(45);
     }
 };

@@ -5,5 +5,10 @@ export default {
 
     updateRouting(state, isRouting) {
         state.routing = isRouting;
+    },
+    
+    setIsTopDown(state, {isTopDown, mapViewText}){
+        state.isTopDown = isTopDown;
+        state.mapViewText = mapViewText;
     }
 };

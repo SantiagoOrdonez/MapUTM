@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from "vuex";
+    import {mapActions, mapGetters, mapMutations} from "vuex";
 
     export default {
         name: 'search-bar',
@@ -17,8 +17,7 @@
                         {name: "Around Me", searchTag: "", iconKey: "aroundme"},
                     ],
                     locationJumps: [
-                        {name: "Deerfield Hall", latLng: [43.549, -79.6636]},
-                        {name: "Dundee", latLng: [56.4602727, -2.9786788]}
+                        {name: "Deerfield Hall", latLng: [43.549, -79.6636]}
                     ]
                 },
                 map: null,
@@ -32,10 +31,12 @@
 
         methods: {
             ...mapActions([
-                'removeRoute',
-                'setRouting'
+                'removeRoute'
             ]),
 
+            ...mapMutations([
+                'updateRouting'
+            ]),
 
             /**
              * Loads the searchbar.
@@ -58,7 +59,7 @@
                     return;
                 }
 
-                this.$store.dispatch('setRouting', {value: true});
+                this.updateRouting(true);
 
                 this.map.indoors.setFloor(event.result.data.floor_id);
 
@@ -74,7 +75,7 @@
              * Clears any search results.
              */
             onResultsClear() {
-                this.$store.dispatch('setRouting', {value: false});
+                this.updateRouting(false);
                 this.removeRoute(this.map);
             }
         },
