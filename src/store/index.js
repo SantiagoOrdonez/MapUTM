@@ -10,6 +10,9 @@ const state = {
     routeLines: [],
     routing: false,
     isTopDown: false,
+    startLocation: [],
+    destinationLocation: [],
+    src: [],
     mapViewText: "2D"
 };
 

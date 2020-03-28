@@ -8,9 +8,9 @@
 </template>
 
 <script>
-    import SearchBar from "./SearchBar"
-    import ScrollBar from "./ScrollBar"
-    import MapViewButton from "./MapViewButton"
+    import SearchBar from "./SearchBar";
+    import ScrollBar from "./ScrollBar";
+    import MapViewButton from "./MapViewButton";
     import {mapActions, mapGetters, mapMutations} from "vuex";
 
     const wrld = require("wrld.js");
@@ -59,7 +59,7 @@
             routeLinesLength: 'getRouteLinesLength',
             routeLinesRoutes: 'getRouteLinesRoutes',
             isRouting: 'isRouting',
-            isTopDown: 'getIsTopDown',
+            isTopDown: 'getIsTopDown'
         }),
 
         methods: {
@@ -104,6 +104,9 @@
              * When floor changes, alter the tilt of the camera according to the current isTopDown state
              */
             onIndoorMapFloorChange() {
+                if (this.isTopDown) {
+                    setTimeout(() => this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0), 100); 
+                }
                 if (this.isTopDown) {
                     setTimeout(() => this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0), 100); 
                 }

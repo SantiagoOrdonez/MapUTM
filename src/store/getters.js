@@ -11,6 +11,14 @@ export default {
         return state.routing;
     },
 
+    getstartLocation: state => {
+        return state.startLocation;
+    },
+
+    getDestinationLocation: state => {
+        return state.destinationLocation;
+    },
+    
     getIsTopDown: state => {
         return state.isTopDown;
     },

@@ -52,6 +52,7 @@ export default {
         commit('updateRoutes', []);
         commit('updateRouting', false);
     },
+    
     updateIsTopDown({commit, getters}, map) {
         commit('setIsTopDown', {isTopDown: !getters.getIsTopDown,
                                  mapViewText: !getters.getIsTopDown ? '3D' : '2D'});

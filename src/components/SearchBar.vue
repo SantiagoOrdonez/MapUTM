@@ -1,12 +1,20 @@
 <template>
-    <div id="searchbar-widget-container" class="wrld-widget-container"></div>
+    <div id="searchbar-widget-container" class="wrld-widget-container">
+        <pop-up v-if="popUpShowing"  v-on:close="popUpShowing = false"></pop-up>
+    </div>    
 </template>
 
 <script>
     import {mapActions, mapGetters, mapMutations} from "vuex";
+    import PopUp from './PopUp';
 
     export default {
         name: 'search-bar',
+
+        components: {
+            PopUp
+        },
+
         data() {
             return {
                 searchbarConfig: {
@@ -21,6 +29,7 @@
                     ]
                 },
                 map: null,
+                popUpShowing: false
             }
         },
 
@@ -38,6 +47,10 @@
                 'updateRouting'
             ]),
 
+            loadPopUp() {
+
+            },
+
             /**
              * Loads the searchbar.
              * @param {L.Wrld.map} map
@@ -54,6 +67,14 @@
              * @param {Event} event
              */
             onResultSelect(event) {
+                
+                /*
+                click search
+                pop up shows 
+                select floor ()
+                route (4)
+                */
+                this.popUpShowing = true;
 
                 if (this.isRouting) {
                     return;
