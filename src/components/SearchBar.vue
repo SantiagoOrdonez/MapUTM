@@ -1,6 +1,7 @@
 <template>
-    <div id="searchbar-widget-container" class="wrld-widget-container">
-        <pop-up v-if="popUpShowing"  v-on:close="popUpShowing = false"></pop-up>
+    <div>
+        <div id="searchbar-widget-container" class="wrld-widget-container"></div>
+        <pop-up></pop-up>
     </div>    
 </template>
 
@@ -9,10 +10,13 @@
     import PopUp from './PopUp';
 
     export default {
+        // not sure if this is a proper way to call functions from another component
+        mixins: [PopUp],
+
         name: 'search-bar',
 
         components: {
-            PopUp
+            PopUp,
         },
 
         data() {
@@ -29,7 +33,9 @@
                     ]
                 },
                 map: null,
-                popUpShowing: false
+                popUpShowing: false,
+                //start: null,
+                //loop: null,
             }
         },
 
@@ -47,9 +53,9 @@
                 'updateRouting'
             ]),
 
-            loadPopUp() {
+            // loadPopUp() {
 
-            },
+            // },
 
             /**
              * Loads the searchbar.
@@ -66,7 +72,8 @@
              * Data for the Place selected by the user.
              * @param {Event} event
              */
-            onResultSelect(event) {
+             //async
+            async onResultSelect(event) {
                 
                 /*
                 click search
@@ -74,8 +81,14 @@
                 select floor ()
                 route (4)
                 */
-                this.popUpShowing = true;
 
+                // TODO: making the dispatch run after getting floor from Popup
+                // So the way I attempted to implement this resulted in both the popup and the route dispatch to run at the same time
+                // rendering the popup useless since the map already routed.
+                this.loadPopUp();
+                //await this.getValue();
+                
+                
                 if (this.isRouting) {
                     return;
                 }
@@ -89,7 +102,7 @@
                 this.$store.dispatch('route', {
                     map: this.map,
                     destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]
-                })
+                })   
             },
 
             /**

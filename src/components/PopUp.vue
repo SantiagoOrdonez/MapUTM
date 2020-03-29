@@ -1,61 +1,78 @@
 <template>
-    <div @click="this.emit('close')" class="hover-background">
+    <div @click="this.emit('close')" id="hover-background" class="hover-background">
         <div id="pop-up-container" class="pop-up-container">
             <h3 class="pop-up-heading">What floor are you on?</h3>
 
             <label class="container">Floor One
-                <input type="radio" checked="checked" name="radio">
+                <input type="radio" checked="checked" name="radio" value="1">
                 <span class="checkmark"></span>
             </label>
 
             <label class="container">Floor Two
-                <input type="radio" name="radio">
+                <input type="radio" name="radio" value="2">
                 <span class="checkmark"></span>
             </label>
 
             <label class="container">Floor Three
-                <input type="radio" name="radio">
+                <input type="radio" name="radio" value="3">
                 <span class="checkmark"></span>
             </label>
 
             <label class="container">Floor Four
-                <input type="radio" name="radio">
+                <input type="radio" name="radio" value="4">
                 <span class="checkmark"></span>
             </label>
 
-            <button class="okButton">Route</button>
+            <button @click="exitPopUp" class="okButton">Route</button>
         </div>
     </div>
 </template>
- 
+
 <script>
-
-export default {
-    name: 'pop-up',
-    data() {
-        return {
-            
-        }
-    },
-
-    methods: {
-        exitPopUp() {
-
+    export default {
+        name: 'pop-up',
+        data() {
+            return {
+                hasSelected: false,
+                selected: 1,
+            }
         },
 
-        enterPopUp() {
+        methods: {
+            exitPopUp() {
+                this.hasSelected = true;
+                document.getElementById("pop-up-container").style.display = "none";
+                document.getElementById("hover-background").style.display = "none";
+            },
 
-        }
-    },
-}
+            loadPopUp() {
+                this.hasSelected = false;
+                document.getElementById("hover-background").style.display = "block";
+                document.getElementById("pop-up-container").style.display = "block";
+            },
+
+            getValue() {
+                const ele = document.getElementsByName("radio");
+
+                for(let i = 0; i<ele.length; i++) {
+                    if(ele[i].checked) {
+                        this.selected = ele[i].value;
+                    }
+                }
+                //console.log(this.selected);
+                //return new Promise(this.hasSelected);
+            }
+
+        },
+    };
 </script>
 
 <style>
 
 .hover-background {
+    display: none;
     background:rgba(0,0,0,.4);
     cursor:pointer;
-    display: block;
     height:100%;
     position:fixed;
     top:0;
@@ -68,6 +85,7 @@ export default {
 }
 
 .pop-up-container {
+    display: none;
     background-color:#fff;
     border-radius: 8px;
     box-shadow: 10px 10px 60px #000;
@@ -96,7 +114,7 @@ export default {
     user-select: none;
 }
 
-/* Hide the browser's default radio button */
+/* Hide the browsers default radio button */
 .container input {
     position: absolute;
     opacity: 0;
@@ -174,3 +192,4 @@ export default {
     border-radius: 50%;
 }
 </style>
+
