@@ -11,7 +11,7 @@ export default {
         return state.routing;
     },
 
-    getstartLocation: state => {
+    getStartLocation: state => {
         return state.startLocation;
     },
 

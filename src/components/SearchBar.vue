@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="searchbar-widget-container" class="wrld-widget-container"></div>
-        <pop-up></pop-up>
+        <pop-up :map="map" v-if="popUpShowing" @close="popUpShowing = false"></pop-up>
     </div>    
 </template>
 
@@ -10,9 +10,6 @@
     import PopUp from './PopUp';
 
     export default {
-        // not sure if this is a proper way to call functions from another component
-        mixins: [PopUp],
-
         name: 'search-bar',
 
         components: {
@@ -34,8 +31,6 @@
                 },
                 map: null,
                 popUpShowing: false,
-                //start: null,
-                //loop: null,
             }
         },
 
@@ -50,12 +45,10 @@
             ]),
 
             ...mapMutations([
-                'updateRouting'
+                'updateRouting',
+                'updateStartLocation',
+                'updateDestinationLocation'
             ]),
-
-            // loadPopUp() {
-
-            // },
 
             /**
              * Loads the searchbar.
@@ -73,7 +66,10 @@
              * @param {Event} event
              */
              //async
-            async onResultSelect(event) {
+            onResultSelect(event) {
+                
+                this.updateRouting(false);
+                this.removeRoute(this.map);
                 
                 /*
                 click search
@@ -85,25 +81,12 @@
                 // TODO: making the dispatch run after getting floor from Popup
                 // So the way I attempted to implement this resulted in both the popup and the route dispatch to run at the same time
                 // rendering the popup useless since the map already routed.
-                this.loadPopUp();
+                this.popUpShowing = true;
                 //await this.getValue();
-                
-                
-                if (this.isRouting) {
-                    return;
-                }
 
-                this.updateRouting(true);
-
-                this.map.indoors.setFloor(event.result.data.floor_id);
-
-                this.map.setView(event.result.location.latLng, 20);
-
-                this.$store.dispatch('route', {
-                    map: this.map,
-                    destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]
-                })   
+                this.updateDestinationLocation([event.result.data.lon, event.result.data.lat, event.result.data.floor_id]);
             },
+
 
             /**
              * Clears any search results.

@@ -5,7 +5,7 @@
 </template>
  
 <script>
-import {mapGetters, mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 export default {
     name: 'map-view-button',
 
@@ -22,6 +22,7 @@ export default {
         ...mapActions([
             "updateIsTopDown"
             ]),
+        
         
         updateView(){
             this.updateIsTopDown(this.map);

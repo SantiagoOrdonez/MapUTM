@@ -1,83 +1,110 @@
-<template>
-    <div @click="this.emit('close')" id="hover-background" class="hover-background">
+<template> 
+    <div>
+        <div id="hover-background" @click="exitPopUp" class="hover-background"></div>
         <div id="pop-up-container" class="pop-up-container">
             <h3 class="pop-up-heading">What floor are you on?</h3>
 
             <label class="container">Floor One
-                <input type="radio" checked="checked" name="radio" value="1">
+                <input v-model="floorPicked" type="radio" checked="checked" name="radio" value="1">
                 <span class="checkmark"></span>
             </label>
 
             <label class="container">Floor Two
-                <input type="radio" name="radio" value="2">
+                <input v-model="floorPicked" type="radio" name="radio" value="2">
                 <span class="checkmark"></span>
             </label>
 
             <label class="container">Floor Three
-                <input type="radio" name="radio" value="3">
+                <input v-model="floorPicked" type="radio" name="radio" value="3">
                 <span class="checkmark"></span>
             </label>
 
             <label class="container">Floor Four
-                <input type="radio" name="radio" value="4">
+                <input v-model="floorPicked" type="radio" name="radio" value="4">
                 <span class="checkmark"></span>
             </label>
 
-            <button @click="exitPopUp" class="okButton">Route</button>
+            <button @click="loadRoute" class="routeButton">Route</button>
         </div>
     </div>
+    
+    
 </template>
 
 <script>
+    import {mapGetters, mapMutations} from "vuex";
+
     export default {
         name: 'pop-up',
+
+        props: {
+            map: null
+        },
+        
         data() {
             return {
-                hasSelected: false,
-                selected: 1,
+                floorPicked: 1,
+                floorLocations: {
+                    "1": [-79.6663313, 43.5504158, 1],
+                    "2": [-79.6663692, 43.5503423, 2],
+                    "3": [-79.6663868, 43.5503985, 3],
+                    "4": [-79.6663171, 43.5504106, 4]
+                }
             }
         },
+
+        computed: mapGetters({
+            // Only re-evaluate when its reactive dependencies are changed
+            isRouting: 'isRouting',
+            getStartLocation: 'getStartLocation',
+            getDestinationLocation: 'getDestinationLocation'
+        }),
 
         methods: {
-            exitPopUp() {
-                this.hasSelected = true;
-                document.getElementById("pop-up-container").style.display = "none";
-                document.getElementById("hover-background").style.display = "none";
-            },
-
-            loadPopUp() {
-                this.hasSelected = false;
-                document.getElementById("hover-background").style.display = "block";
-                document.getElementById("pop-up-container").style.display = "block";
-            },
-
-            getValue() {
-                const ele = document.getElementsByName("radio");
-
-                for(let i = 0; i<ele.length; i++) {
-                    if(ele[i].checked) {
-                        this.selected = ele[i].value;
-                    }
+            ...mapMutations([
+                'updateRouting',
+                'updateStartLocation'
+            ]),            
+            loadRoute() {
+                this.exitPopUp();
+                
+                if (this.isRouting) {
+                    return;
                 }
-                //console.log(this.selected);
-                //return new Promise(this.hasSelected);
-            }
 
+                this.updateStartLocation(this.floorLocations[this.floorPicked]);
+                
+                this.updateRouting(true);
+
+                this.map.indoors.setFloor(this.getDestinationLocation[2]);
+
+                this.map.setView({lat: this.getDestinationLocation[1], lng: this.getDestinationLocation[0]}, 20);
+
+                this.$store.dispatch('route', {
+                    map: this.map,
+                    start: this.getStartLocation,
+                    destination: this.getDestinationLocation
+                });
+            },
+            
+            exitPopUp () {
+                this.$emit('close');
+            }
         },
+
     };
 </script>
 
 <style>
 
 .hover-background {
-    display: none;
-    background:rgba(0,0,0,.4);
+    background:rgba(0,0,0,.3);
     cursor:pointer;
     height:100%;
     position:fixed;
     top:0;
     width:100%;
-    z-index:10000;
+    z-index: 10000;
 }
 
 .pop-up-heading {
@@ -85,20 +112,18 @@
 }
 
 .pop-up-container {
-    display: none;
     background-color:#fff;
     border-radius: 8px;
     box-shadow: 10px 10px 60px #000;
     position: absolute;
     padding: 30px;
+    z-index: 10001;
 
     width: 210px;
     height: 236px;
 
     left: calc(50vw - 105px - 30px);
     top: calc(50vh - 119px - 30px);
-    
-    z-index: 100;
 }
 
 .container {
@@ -168,7 +193,7 @@
     color:#000060
 }
 
-.okButton {
+.routeButton {
     background-color: #edebe9;
     border: none;
     color: black;
@@ -179,17 +204,6 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
-}
-
-.exitButton {
-    background-color: #edebe9;
-    border: none;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    border-radius: 50%;
 }
 </style>
 
