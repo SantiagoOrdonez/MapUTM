@@ -25,7 +25,7 @@ export default {
                         indoorMapId: step.indoorMapId,
                         indoorMapFloorId: step.indoorMapFloorId,
                         weight: 5,
-                        color: '#FFFF00',
+                        color: '#04437A',
                     });
                 routeLine.addTo(map);
                 routeLines.push(routeLine);

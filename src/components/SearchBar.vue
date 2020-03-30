@@ -1,8 +1,9 @@
 <template>
     <div>
         <div id="searchbar-widget-container" class="wrld-widget-container"></div>
-        <pop-up :map="map" v-if="popUpShowing" @close="popUpShowing = false"></pop-up>
-    </div>    
+        <pop-up :markerController="this.markerController" :roomLocation="this.roomLocation" :map="this.map" v-if="popUpShowing"
+                @close="popUpShowing=false "></pop-up>
+    </div>
 </template>
 
 <script>
@@ -30,8 +31,12 @@
                     ]
                 },
                 map: null,
+                roomLocation: "",
                 popUpShowing: false,
             }
+        },
+        props: {
+            markerController: Object
         },
 
         computed: mapGetters({
@@ -65,15 +70,20 @@
              * Data for the Place selected by the user.
              * @param {Event} event
              */
-             //async
+            //async
             onResultSelect(event) {
-                
-                this.updateRouting(false);
-                this.removeRoute(this.map);
-                
-                this.popUpShowing = true;
+                // if (this.markerController != null) {
+                if (this.map.indoors.isIndoors()) {
+                    this.markerController.removeAllMarkers();
+                    // }
+                    this.updateRouting(false);
+                    this.removeRoute(this.map);
 
-                this.updateDestinationLocation([event.result.data.lon, event.result.data.lat, event.result.data.floor_id]);
+                    this.popUpShowing = true;
+                    this.roomLocation = event.result['title'];
+                    this.updateDestinationLocation([event.result.data.lon, event.result.data.lat, event.result.data.floor_id]);
+                    // this.map.setView(event.result.location.latLng, 18); // need to set it to starting floor
+                }
             },
 
 
@@ -81,6 +91,9 @@
              * Clears any search results.
              */
             onResultsClear() {
+                // if (this.markerController != null) {
+                    this.markerController.removeAllMarkers();
+                // }
                 this.updateRouting(false);
                 this.removeRoute(this.map);
             }

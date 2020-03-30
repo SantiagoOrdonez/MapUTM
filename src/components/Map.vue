@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <search-bar ref="search"></search-bar>
+        <search-bar ref="search" :markerController="this.markerController"></search-bar>
         <scroll-bar ref="scroll"></scroll-bar>
         <map-view-button :map="this.map"></map-view-button>
         <div id="map" style="height: 96vh"></div>
@@ -29,7 +29,8 @@
             return {
                 msg: 'MapUTM',
                 map: null,
-                initialLocation: [43.549, -79.6636] // UTM
+                initialLocation: [43.549, -79.6636], // UTM
+                markerController: null
             }
         },
 
@@ -45,6 +46,7 @@
                 coverageTreeManifest: "https://webgl-cdn1.wrld3d.com/chunk/indoor_maps/api_requests/EIM-c3eb2f77-20e3-4b6b-bb11-784ced915fa0_2020_03_04_02_06_16/webgl_manifest.bin.gz",
                 height: 500
             });
+            this.markerController = new window.WrldMarkerController(this.map, { poiViewsEnabled: true });
 
             this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
             this.map.indoors.on("expand", this.onIndoorMapExpanded);
@@ -80,6 +82,7 @@
                     this.removeRoute(this.map);
                 }
                 this.map.indoors.exit();
+                this.markerController.removeAllMarkers();
             },
 
             /**

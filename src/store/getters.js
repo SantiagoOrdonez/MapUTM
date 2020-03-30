@@ -25,5 +25,8 @@ export default {
 
     getMapViewText: state => {
         return state.mapViewText;
+    },
+    getMarkerController: state => {
+        return state.markerController;
     }
 }
