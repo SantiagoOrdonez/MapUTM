@@ -13,5 +13,10 @@ export default {
 
     updateDestinationLocation(state, destinationLocation) {
         state.destinationLocation = destinationLocation;
+    },
+
+    setIsTopDown(state, {isTopDown, mapViewText}){
+        state.isTopDown = isTopDown;
+        state.mapViewText = mapViewText;
     }
 };

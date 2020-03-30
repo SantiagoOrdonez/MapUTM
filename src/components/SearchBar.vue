@@ -71,18 +71,7 @@
                 this.updateRouting(false);
                 this.removeRoute(this.map);
                 
-                /*
-                click search
-                pop up shows 
-                select floor ()
-                route (4)
-                */
-
-                // TODO: making the dispatch run after getting floor from Popup
-                // So the way I attempted to implement this resulted in both the popup and the route dispatch to run at the same time
-                // rendering the popup useless since the map already routed.
                 this.popUpShowing = true;
-                //await this.getValue();
 
                 this.updateDestinationLocation([event.result.data.lon, event.result.data.lat, event.result.data.floor_id]);
             },
