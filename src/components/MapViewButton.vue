@@ -1,25 +1,29 @@
 <template>
     <div id="map-view-button-container" class="map-view-button-container">
         <button class="map-view-button" v-on:click="updateView">{{this.getMapViewText}}</button>
-    
     </div>
 </template>
  
 <script>
-import {mapGetters, mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 export default {
     name: 'map-view-button',
+
     props: {
         map: null
     },
+    
     computed: mapGetters({
-                getMapViewText: "getMapViewText",
-                getIsTopDown: "getIsTopDown"
+        getMapViewText: "getMapViewText",
+        getIsTopDown: "getIsTopDown"
     }),
+    
     methods: {
         ...mapActions([
             "updateIsTopDown"
             ]),
+        
+        
         updateView(){
             this.updateIsTopDown(this.map);
         }

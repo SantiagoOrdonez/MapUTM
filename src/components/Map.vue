@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <search-bar ref="search"></search-bar>
+        <search-bar ref="search" :markerController="this.markerController"></search-bar>
         <scroll-bar ref="scroll"></scroll-bar>
         <map-view-button :map="this.map"></map-view-button>
         <div id="map" style="height: 96vh"></div>
@@ -8,9 +8,9 @@
 </template>
 
 <script>
-    import SearchBar from "./SearchBar"
-    import ScrollBar from "./ScrollBar"
-    import MapViewButton from "./MapViewButton"
+    import SearchBar from "./SearchBar";
+    import ScrollBar from "./ScrollBar";
+    import MapViewButton from "./MapViewButton";
     import {mapActions, mapGetters, mapMutations} from "vuex";
 
     const wrld = require("wrld.js");
@@ -29,7 +29,8 @@
             return {
                 msg: 'MapUTM',
                 map: null,
-                initialLocation: [43.549, -79.6636] // UTM
+                initialLocation: [43.549, -79.6636], // UTM
+                markerController: null
             }
         },
 
@@ -43,8 +44,10 @@
                 idleSecondsBeforeFrameRateThrottle: 15.0,
                 indoorsEnabled: true,
                 coverageTreeManifest: "https://webgl-cdn1.wrld3d.com/chunk/indoor_maps/api_requests/EIM-c3eb2f77-20e3-4b6b-bb11-784ced915fa0_2020_03_04_02_06_16/webgl_manifest.bin.gz",
-                height: 500
+                height: 500,
+
             });
+            this.markerController = new window.WrldMarkerController(this.map, {poiViewsEnabled: true});
 
             this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
             this.map.indoors.on("expand", this.onIndoorMapExpanded);
@@ -52,6 +55,7 @@
             this.map.indoors.on("indoormapfloorchange", this.onIndoorMapFloorChange);
             this.$refs.search.loadSearchbar(this.map);
             this.$refs.scroll.loadScrollbar(this.map);
+            this.map.setCameraHeadingDegrees(0).setCameraTiltDegrees(0);
         },
 
         computed: mapGetters({
@@ -59,7 +63,7 @@
             routeLinesLength: 'getRouteLinesLength',
             routeLinesRoutes: 'getRouteLinesRoutes',
             isRouting: 'isRouting',
-            isTopDown: 'getIsTopDown',
+            isTopDown: 'getIsTopDown'
         }),
 
         methods: {
@@ -67,19 +71,20 @@
             ...mapActions([
                 "setRouting",
                 "removeRoute",
-                "updateIsTopDown", 
+                "updateIsTopDown",
                 "tiltMap"]),
 
             ...mapMutations([
-                "updateRouting" //setIsRouteShowing
+                "updateRouting"
             ]),
-            
+
             onIndoorMapExited() {
                 if (this.isRouting) {
                     this.updateRouting(false);
                     this.removeRoute(this.map);
                 }
                 this.map.indoors.exit();
+                this.markerController.removeAllMarkers();
             },
 
             /**
@@ -105,7 +110,7 @@
              */
             onIndoorMapFloorChange() {
                 if (this.isTopDown) {
-                    setTimeout(() => this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0), 100); 
+                    setTimeout(() => this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0), 100);
                 }
             }
         }

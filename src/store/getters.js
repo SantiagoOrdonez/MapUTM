@@ -11,11 +11,22 @@ export default {
         return state.routing;
     },
 
+    getStartLocation: state => {
+        return state.startLocation;
+    },
+
+    getDestinationLocation: state => {
+        return state.destinationLocation;
+    },
+    
     getIsTopDown: state => {
         return state.isTopDown;
     },
 
     getMapViewText: state => {
         return state.mapViewText;
+    },
+    getMarkerController: state => {
+        return state.markerController;
     }
 }

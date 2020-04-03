@@ -1,12 +1,22 @@
 <template>
-    <div id="searchbar-widget-container" class="wrld-widget-container"></div>
+    <div>
+        <div id="searchbar-widget-container" class="wrld-widget-container"></div>
+        <pop-up :markerController="this.markerController" :roomLocation="this.roomLocation" :map="this.map" v-if="popUpShowing"
+                @close="popUpShowing=false "></pop-up>
+    </div>
 </template>
 
 <script>
     import {mapActions, mapGetters, mapMutations} from "vuex";
+    import PopUp from './PopUp';
 
     export default {
         name: 'search-bar',
+
+        components: {
+            PopUp,
+        },
+
         data() {
             return {
                 searchbarConfig: {
@@ -21,7 +31,12 @@
                     ]
                 },
                 map: null,
+                roomLocation: "",
+                popUpShowing: false,
             }
+        },
+        props: {
+            markerController: Object
         },
 
         computed: mapGetters({
@@ -35,7 +50,9 @@
             ]),
 
             ...mapMutations([
-                'updateRouting'
+                'updateRouting',
+                'updateStartLocation',
+                'updateDestinationLocation'
             ]),
 
             /**
@@ -53,28 +70,24 @@
              * Data for the Place selected by the user.
              * @param {Event} event
              */
+            //async
             onResultSelect(event) {
-
-                if (this.isRouting) {
-                    return;
+                if (this.map.indoors.isIndoors()) {
+                    this.markerController.removeAllMarkers();
+                    this.updateRouting(false);
+                    this.removeRoute(this.map);
+                    this.popUpShowing = true;
+                    this.roomLocation = event.result['title'];
+                    this.updateDestinationLocation([event.result.data.lon, event.result.data.lat, event.result.data.floor_id]);
                 }
-
-                this.updateRouting(true);
-
-                this.map.indoors.setFloor(event.result.data.floor_id);
-
-                this.map.setView(event.result.location.latLng, 20);
-
-                this.$store.dispatch('route', {
-                    map: this.map,
-                    destination: [event.result.data.lon, event.result.data.lat, event.result.data.floor_id]
-                })
             },
+
 
             /**
              * Clears any search results.
              */
             onResultsClear() {
+                this.markerController.removeAllMarkers();
                 this.updateRouting(false);
                 this.removeRoute(this.map);
             }

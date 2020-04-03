@@ -5,9 +5,9 @@ export default {
      * @param {*} param0 
      * @param {*} param1 
      */
-    route({commit}, {map, destination}) {
-        const startPoint = [-79.6663313, 43.5504158, 1]; // First Floor of UTM
-        // const startPoint = [-2.978629, 56.46024, 0]; // Hardcoded Dundee Coordinates
+
+    route({commit}, {map, start, destination}) {
+        const startPoint = start;
         const endPoint = destination;
         endPoint[2] += 1; // Z-Index Order counts from 0
 
@@ -25,7 +25,7 @@ export default {
                         indoorMapId: step.indoorMapId,
                         indoorMapFloorId: step.indoorMapFloorId,
                         weight: 5,
-                        color: '#FFFF00',
+                        color: '#04437A',
                     });
                 routeLine.addTo(map);
                 routeLines.push(routeLine);
@@ -52,6 +52,7 @@ export default {
         commit('updateRoutes', []);
         commit('updateRouting', false);
     },
+    
     updateIsTopDown({commit, getters}, map) {
         commit('setIsTopDown', {isTopDown: !getters.getIsTopDown,
                                  mapViewText: !getters.getIsTopDown ? '3D' : '2D'});
