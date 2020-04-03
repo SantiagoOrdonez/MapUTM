@@ -74,8 +74,6 @@
                 'updateStartLocation'
             ]),
             loadRoute() {
-                // this.markerController.removeAllMarkers();
-
                 this.exitPopUp();
 
                 if (this.isRouting) {
@@ -83,28 +81,21 @@
                 }
 
                 this.updateStartLocation(this.floorLocations[this.floorPicked]);
-
                 this.updateRouting(true);
-
-                // this.map.indoors.setFloor(this.getDestinationLocation[2]);
                 this.map.indoors.setFloor(this.floorLocations[this.floorPicked][2] - 1);
-                // console.log(this.getDestinationLocation[2]);
-                // console.log(this.floorLocations[this.floorPicked][2]);
 
-
-                // this.map.setView({lat: this.getDestinationLocation[1], lng: this.getDestinationLocation[0]}, 20);
                 this.map.setView({lat: this.getStartLocation[1], lng: this.getStartLocation[0]}, 20);
 
-                let startingFloor = parseInt(this.floorLocations[this.floorPicked][2]) + 1;
+                let startingFloor = parseInt(this.floorLocations[this.floorPicked][2]);
                 const startMarkerInfo = {
                     poiView: {
-                        title: "You are on floor " + (startingFloor - 1) + ". Your room is on floor " + (this.getDestinationLocation[2] + 1) + ".",
+                        title: "You are on floor " + startingFloor + ". Your room is on floor " + (this.getDestinationLocation[2] + 1) + ".",
                     },
-                    floorIndex: startingFloor - 2, // need to set it to starting floor
+                    floorIndex: startingFloor - 1,
                     iconKey: 'dir_route_start',
 
                 };
-                this.markerController.addMarker(1, [this.getStartLocation[1], this.getStartLocation[0]], startMarkerInfo);// { lat: 43.5504633, lng: -79.6666717 }
+                this.markerController.addMarker(1, [this.getStartLocation[1], this.getStartLocation[0]], startMarkerInfo);
                 this.markerController.showMarker(1);
 
                 const endMarkerInfo = {
@@ -113,7 +104,7 @@
                     },
                     floorIndex: this.getDestinationLocation[2],
                 };
-                this.markerController.addMarker(2, [this.getDestinationLocation[1], this.getDestinationLocation[0]], endMarkerInfo);// { lat: 43.5504633, lng: -79.6666717 }
+                this.markerController.addMarker(2, [this.getDestinationLocation[1], this.getDestinationLocation[0]], endMarkerInfo);
                 this.markerController.showMarker(2);
 
                 this.$store.dispatch('route', {
@@ -121,17 +112,6 @@
                     start: this.getStartLocation,
                     destination: this.getDestinationLocation
                 });
-
-                // setTimeout(() => {
-                //         this.markerController.selectMarker(1);
-                //         this.markerController.openPoiView(1);
-                //     },
-                //     1000);
-                // setTimeout(() => {
-                //         this.markerController.closePoiView(1);
-                //     },
-                //     3000);
-
             },
 
             exitPopUp() {

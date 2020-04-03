@@ -72,17 +72,13 @@
              */
             //async
             onResultSelect(event) {
-                // if (this.markerController != null) {
                 if (this.map.indoors.isIndoors()) {
                     this.markerController.removeAllMarkers();
-                    // }
                     this.updateRouting(false);
                     this.removeRoute(this.map);
-
                     this.popUpShowing = true;
                     this.roomLocation = event.result['title'];
                     this.updateDestinationLocation([event.result.data.lon, event.result.data.lat, event.result.data.floor_id]);
-                    // this.map.setView(event.result.location.latLng, 18); // need to set it to starting floor
                 }
             },
 
@@ -91,9 +87,7 @@
              * Clears any search results.
              */
             onResultsClear() {
-                // if (this.markerController != null) {
-                    this.markerController.removeAllMarkers();
-                // }
+                this.markerController.removeAllMarkers();
                 this.updateRouting(false);
                 this.removeRoute(this.map);
             }

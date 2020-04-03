@@ -75,7 +75,7 @@
                 "tiltMap"]),
 
             ...mapMutations([
-                "updateRouting" //setIsRouteShowing
+                "updateRouting"
             ]),
 
             onIndoorMapExited() {

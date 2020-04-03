@@ -7,7 +7,7 @@ export default {
      */
 
     route({commit}, {map, start, destination}) {
-        const startPoint = start; // [-79.6663313, 43.5504158, 1]; // First Floor of UTM GOOGLE HOW TO GET STATE INSIDE ACTIONS.
+        const startPoint = start;
         const endPoint = destination;
         endPoint[2] += 1; // Z-Index Order counts from 0
 
