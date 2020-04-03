@@ -9,8 +9,13 @@
                 <span class="checkmark"></span>
             </label>
 
-            <label class="container">Floor Two
+            <label class="container">Floor Two - Stairs
                 <input v-model="floorPicked" type="radio" name="radio" value="2">
+                <span class="checkmark"></span>
+            </label>
+
+            <label class="container">Floor Two - Entrance
+                <input v-model="floorPicked" type="radio" name="radio" value="2.5">
                 <span class="checkmark"></span>
             </label>
 
@@ -49,6 +54,7 @@
                 floorLocations: {
                     "1": [-79.66602, 43.5503411, 1],
                     "2": [-79.6662331, 43.5504474, 2],
+                    "2.5": [-79.6665962, 43.5505556, 2],
                     "3": [-79.6662687, 43.5504318, 3],
                     "4": [-79.6662511, 43.5504525, 4]
                 },
@@ -93,7 +99,6 @@
                 const startMarkerInfo = {
                     poiView: {
                         title: "You are on floor " + (startingFloor - 1) + ". Your room is on floor " + (this.getDestinationLocation[2] + 1) + ".",
-                        customViewHeight: 50
                     },
                     floorIndex: startingFloor - 2, // need to set it to starting floor
                     iconKey: 'dir_route_start',
@@ -117,15 +122,15 @@
                     destination: this.getDestinationLocation
                 });
 
-                setTimeout(() => {
-                        this.markerController.selectMarker(1);
-                    },
-                    1000);
-                this.markerController.openPoiView(1);
-                setTimeout(() => {
-                        this.markerController.closePoiView(1);
-                    },
-                    3000);
+                // setTimeout(() => {
+                //         this.markerController.selectMarker(1);
+                //         this.markerController.openPoiView(1);
+                //     },
+                //     1000);
+                // setTimeout(() => {
+                //         this.markerController.closePoiView(1);
+                //     },
+                //     3000);
 
             },
 
@@ -160,9 +165,8 @@
         position: absolute;
         padding: 30px;
         z-index: 10001;
-
         width: 210px;
-        height: 236px;
+        height: 280px;
 
         left: calc(50vw - 105px - 30px);
         top: calc(50vh - 119px - 30px);

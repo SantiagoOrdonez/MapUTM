@@ -9,11 +9,11 @@ Vue.use(Vuex);
 const state = {
     routeLines: [],
     routing: false,
-    isTopDown: false,
+    isTopDown: true,
     startLocation: [],
     destinationLocation: [],
     src: [],
-    mapViewText: "2D"
+    mapViewText: "3D"
 };
 
 export default new Vuex.Store({

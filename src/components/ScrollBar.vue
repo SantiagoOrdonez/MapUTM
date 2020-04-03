@@ -10,7 +10,7 @@
         methods: {
             loadScrollbar(map) {
                 this.map = map;
-                var indoorControl = new window.WrldIndoorControl("scrollbar-container", this.map);
+                let indoorControl = new window.WrldIndoorControl("scrollbar-container", this.map);
                 return indoorControl;
             },
         },

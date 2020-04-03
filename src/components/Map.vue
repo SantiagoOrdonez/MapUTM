@@ -44,9 +44,10 @@
                 idleSecondsBeforeFrameRateThrottle: 15.0,
                 indoorsEnabled: true,
                 coverageTreeManifest: "https://webgl-cdn1.wrld3d.com/chunk/indoor_maps/api_requests/EIM-c3eb2f77-20e3-4b6b-bb11-784ced915fa0_2020_03_04_02_06_16/webgl_manifest.bin.gz",
-                height: 500
+                height: 500,
+
             });
-            this.markerController = new window.WrldMarkerController(this.map, { poiViewsEnabled: true });
+            this.markerController = new window.WrldMarkerController(this.map, {poiViewsEnabled: true});
 
             this.map.indoors.on("indoormapexit", this.onIndoorMapExited);
             this.map.indoors.on("expand", this.onIndoorMapExpanded);
@@ -54,6 +55,7 @@
             this.map.indoors.on("indoormapfloorchange", this.onIndoorMapFloorChange);
             this.$refs.search.loadSearchbar(this.map);
             this.$refs.scroll.loadScrollbar(this.map);
+            this.map.setCameraHeadingDegrees(0).setCameraTiltDegrees(0);
         },
 
         computed: mapGetters({
@@ -69,13 +71,13 @@
             ...mapActions([
                 "setRouting",
                 "removeRoute",
-                "updateIsTopDown", 
+                "updateIsTopDown",
                 "tiltMap"]),
 
             ...mapMutations([
                 "updateRouting" //setIsRouteShowing
             ]),
-            
+
             onIndoorMapExited() {
                 if (this.isRouting) {
                     this.updateRouting(false);
@@ -108,10 +110,7 @@
              */
             onIndoorMapFloorChange() {
                 if (this.isTopDown) {
-                    setTimeout(() => this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0), 100); 
-                }
-                if (this.isTopDown) {
-                    setTimeout(() => this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0), 100); 
+                    setTimeout(() => this.map.setCameraHeadingDegrees(45).setCameraTiltDegrees(0), 100);
                 }
             }
         }
